@@ -39,6 +39,10 @@ public class Server {
             while ((input = in.readLine()) != null)
             {
                 System.out.println("Received: " + input);
+                if(input.equals("Test"))
+                {
+                	out.println("Test Received");
+                }
                 if(input.equals("Bye"))
                     break;
                 out.println("Im a dummy");
