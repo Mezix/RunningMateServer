@@ -6,7 +6,7 @@ public class Server {
     public static void main (String[] args) throws IOException
     {
         ServerSocket serverSocket = null;
-        int port = 5000;
+        int port = 6000;
 
         try
         {
