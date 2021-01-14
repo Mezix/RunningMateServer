@@ -17,7 +17,8 @@ public class ProcessUserInput {
 		{
 			returnedString = "Goodbye";
 		}
-			
+
+		System.out.println(returnedString);
 		//Return String
 		return returnedString;
 	}
