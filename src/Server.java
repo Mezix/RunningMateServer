@@ -6,7 +6,6 @@ public class Server {
     public static void main (String[] args) throws IOException
     {
     	ProcessUserInput InputProcessor = new ProcessUserInput();
-    	InputProcessor.ProcessString("Register:Hande:blabla:hande:456");
         ServerSocket serverSocket = null;
         int port = 8000;
         
