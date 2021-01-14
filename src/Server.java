@@ -7,7 +7,7 @@ public class Server {
     {
     	ProcessUserInput Processor = new ProcessUserInput();
         ServerSocket serverSocket = null;
-        int port = 6000;
+        int port = 8000;
 
         try
         {
