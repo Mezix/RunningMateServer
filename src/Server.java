@@ -5,6 +5,7 @@ public class Server {
 
     public static void main (String[] args) throws IOException
     {
+    	ProcessUserInput Processor = new ProcessUserInput();
         ServerSocket serverSocket = null;
         int port = 6000;
 
@@ -43,13 +44,11 @@ public class Server {
             while ((input = in.readLine()) != null)
             {
                 System.out.println("Received: " + input);
-                if(input.equals("Test"))
-                {
-                	out.println("Test Received");
-                }
+                
                 if(input.equals("Bye"))
                     break;
-                out.println("Im a dummy\n");
+                
+                out.println(Processor.ProcessString(input));
             }
             out.println("Bye");
 
