@@ -5,10 +5,11 @@ public class Server {
 
     public static void main (String[] args) throws IOException
     {
-    	ProcessUserInput Processor = new ProcessUserInput();
+    	ProcessUserInput InputProcessor = new ProcessUserInput();
+    	InputProcessor.ProcessString("Register:Hande:blabla:hande:456");
         ServerSocket serverSocket = null;
         int port = 8000;
-
+        
         try
         {
             serverSocket = new ServerSocket(port);
@@ -48,7 +49,7 @@ public class Server {
                 if(input.equals("Bye"))
                     break;
                 
-                out.println(Processor.ProcessString(input));
+                out.println(InputProcessor.ProcessString(input));
             }
             out.println("Bye");
 
