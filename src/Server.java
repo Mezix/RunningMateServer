@@ -11,6 +11,8 @@ public class Server {
         try
         {
             serverSocket = new ServerSocket(port);
+            System.out.println("Server Socket Created");
+            
         }
         catch (IOException e)
         {
@@ -21,6 +23,7 @@ public class Server {
         Socket clientSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
+        System.out.println(serverSocket.toString());
 
         while(true)
         {
@@ -29,6 +32,7 @@ public class Server {
                 clientSocket = serverSocket.accept();
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println("Connection Established");
             }
             catch (IOException e)
             {
