@@ -49,7 +49,7 @@ public class Server {
                 }
                 if(input.equals("Bye"))
                     break;
-                out.println("Im a dummy");
+                out.println("Im a dummy\n");
             }
             out.println("Bye");
 
