@@ -14,7 +14,7 @@ public class ProcessUserInput {
 		
 		//Process String
 		
-		if(receivedString == "Hello")
+		if(receivedString.equals("Hello"))
 		{
 			returnedString = "Goodbye";
 		}
