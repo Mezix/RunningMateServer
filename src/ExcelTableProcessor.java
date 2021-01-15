@@ -37,8 +37,45 @@ public class ExcelTableProcessor
 		fileOuput.close();
 		System.out.println("Data entered in a Data excel file");
 	}*/
+	public String Login(String username, String passwort) throws Exception
+	{
+		boolean loginSucceeded = false;
+		
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		System.out.println("Adding New Person");
+		int numberOfRows = 1 + sheet.getLastRowNum();
+		for(int i = 0; i < numberOfRows; i++)
+		{
+			if(sheet.getRow(i) != null)
+			{
+				if(sheet.getRow(i).getCell(3) != null)
+				{
+					if(sheet.getRow(i).getCell(3).getStringCellValue().equals(username))
+					{
+						if(sheet.getRow(i).getCell(4).getStringCellValue().equals(passwort))
+						{
+							loginSucceeded = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		if(loginSucceeded)
+		{
+			return"Login:Success";
+		}
+		else
+		{
+			return "Login:Failed";
+		}
+	}
 	
-	public String AddNewPersonToDatabase(String UsernameToAdd, String Password, String DisplayName, String Age) throws Exception
+	public String AddNewPersonToDatabase(String firstName, String lastName, String age, String username, String passwort) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -46,14 +83,13 @@ public class ExcelTableProcessor
 		
 		System.out.println("Adding New Person");
 		int numberOfRows = 1 + sheet.getLastRowNum();
-		System.out.println( numberOfRows + " Rows");
 		for(int i = 0; i < numberOfRows; i++)
 		{
 			if(sheet.getRow(i) != null)
 			{
-				if(sheet.getRow(i).getCell(0) != null)
+				if(sheet.getRow(i).getCell(3) != null)
 				{
-					if(sheet.getRow(i).getCell(0).getStringCellValue().equals(UsernameToAdd))
+					if(sheet.getRow(i).getCell(3).getStringCellValue().equals(username))
 					{
 						return "Already Added a person with this Name!";
 					}
@@ -61,19 +97,16 @@ public class ExcelTableProcessor
 			}
 		}
 		
-		//Add Username
-		WriteToDatabase(numberOfRows, 0, UsernameToAdd);
-		//Add Password
-		WriteToDatabase(numberOfRows, 1, Password);
-		//Add Displayname
-		WriteToDatabase(numberOfRows, 2, DisplayName);
-		//Add Age
-		WriteToDatabase(numberOfRows, 3, Age);
+		WriteToDatabase(numberOfRows, 0, firstName);
+		WriteToDatabase(numberOfRows, 1, lastName);
+		WriteToDatabase(numberOfRows, 2, age);
+		WriteToDatabase(numberOfRows, 3, username);
+		WriteToDatabase(numberOfRows, 4, passwort);
 		
 		
 		System.out.println("Data entered in a Data excel file");
 		
-		return "Added Person: '" + UsernameToAdd + "' to the Database (or at least the excel spreadsheet)!";
+		return "Added Person: '" + username + "' to the Database (or at least the excel spreadsheet)!";
 	}
 	
 	private void WriteToDatabase(int row, int cell, String text) throws Exception

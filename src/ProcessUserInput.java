@@ -11,23 +11,30 @@ public class ProcessUserInput {
 		
 		String[] SplitString = receivedString.split(":");
 		
+		SplitString[0] = SplitString[0].toLowerCase(); //Lowercase the command part of the string so we dont have frustrating case issues!
+		
 		//Process String
-		if(SplitString[0].equals("Register"))
+		
+		if(SplitString[0].equals("login"))
+		{
+			returnedString = Login(SplitString);
+		}
+		else if(SplitString[0].equals("register"))
 		{
 			//String Syntax we need:
 			//Register:<Username>:<Password>:<DisplayName>:<Age> (MORE TO COME HERE)
 			returnedString = RegisterUser(SplitString);
 		}
-		if(SplitString[0].equals("Friend"))
+		else if(SplitString[0].equals("friend"))
 		{
-			//returnedString = SplitString[1];
-			if(SplitString[1].equals("Get"))
+			SplitString[1] = SplitString[1].toLowerCase();
+			if(SplitString[1].equals("get"))
 			{
 				//String syntax we are hoping for:
 				//Friend:<name here>
 				returnedString = ReturnFriend();
 			}
-			if(SplitString[1].equals("Add"))
+			else if(SplitString[1].equals("add"))
 			{
 				//Add a friend to another persons list:
 				//Friend:Add:<Felix>:<Enric> (adds felix to enrics friend list)
@@ -41,6 +48,29 @@ public class ProcessUserInput {
 		return returnedString;
 	}
 	
+	public String Login(String[] s)
+	{
+		try 
+		{
+			return excelTable.Login(s[1], s[2]);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "Login caused Exception";
+		}
+	}
+	public String RegisterUser(String[] s)
+	{
+		try 
+		{
+			return excelTable.AddNewPersonToDatabase(s[1], s[2], s[3], s[4], s[5]);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return "Adding Person caused Exception";
+		}
+	}
 	public String ReturnFriend()
 	{
 		return "Heres your friend (kinda)";	
@@ -48,17 +78,6 @@ public class ProcessUserInput {
 	public String AddFriend(String FriendToAdd, String PersonsListToAddTo)
 	{
 		return "Added Friend maybe (test)";
-	}
-	public String RegisterUser(String[] s)
-	{
-		try 
-		{
-			return excelTable.AddNewPersonToDatabase(s[1], s[2], s[3], s[4]);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			return "Adding Person caused Exception";
-		}
 	}
 	
 }
