@@ -95,7 +95,7 @@ public class ExcelTableProcessor
 		{
 			if(sheet.getRow(row).getCell(5) != null)
 			{
-				String [] FriendsList = sheet.getRow(row).getCell(5).getStringCellValue().split("$");
+				String [] FriendsList = sheet.getRow(row).getCell(5).getStringCellValue().split("_");
 				for(int i = 0; i < FriendsList.length; i++)
 				{
 					if(FriendsList[i].equals(username))
@@ -112,9 +112,9 @@ public class ExcelTableProcessor
 	
 	public String Login(String username, String passwort) throws Exception
 	{
-		System.out.println("Attempting Login of User$ "+ username);
+		System.out.println("Attempting Login of User_ "+ username);
 		
-		String loginOutputMessage = "login$";
+		String loginOutputMessage = "login_";
 		
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -139,7 +139,7 @@ public class ExcelTableProcessor
 						}
 						else
 						{
-							loginOutputMessage += "failed$password";
+							loginOutputMessage += "failed_password";
 						}
 					}
 				}
@@ -147,7 +147,7 @@ public class ExcelTableProcessor
 		}
 		if(!usernameExists)
 		{
-			loginOutputMessage += "failed$username";
+			loginOutputMessage += "failed_username";
 		}
 		
 		return loginOutputMessage;
@@ -165,7 +165,7 @@ public class ExcelTableProcessor
 		int RowOfExistingUsername = FindRowOfPerson(username);
 		if(RowOfExistingUsername != -1)
 		{
-			return "registration$failed$username";
+			return "registration_failed_username";
 		}
 		
 		WriteToDatabase(numberOfRows, 0, username);
@@ -174,7 +174,7 @@ public class ExcelTableProcessor
 		WriteToDatabase(numberOfRows, 3, lastName);
 		WriteToDatabase(numberOfRows, 4, age);
 		
-		return "registration$success";
+		return "registration_success";
 	}
 	
 	public String AddFriend(String person1, String person2) throws Exception
@@ -184,7 +184,7 @@ public class ExcelTableProcessor
 		
 		if(person1.equals(person2))
 		{
-			return "Friend$Add$" + person1 + "$" + person2 + "$Failed$SamePerson";
+			return "Friend_Add_" + person1 + "_" + person2 + "_Failed_SamePerson";
 		}
 		
 		fileInput=new FileInputStream("./data.xlsx");
@@ -207,21 +207,21 @@ public class ExcelTableProcessor
 			}
 			else
 			{
-				return "Friend$Add$" + person1 + "$" + person2 + "$"+ "Failed$AlreadyFriend";
+				return "Friend_Add_" + person1 + "_" + person2 + "_"+ "Failed_AlreadyFriend";
 			}
 		}
 		else
 		{
 			if(person1row == -1)
 			{
-				return "Friend$Add$" + person1 + "$" + person2 + "$Failed$user " + person1 + " doesnt exist";
+				return "Friend_Add_" + person1 + "_" + person2 + "_Failed_user " + person1 + " doesnt exist";
 			}
 			else if(person2row == -1)
 			{
-				return "Friend$Add$" + person1 + "$" + person2 + "$Failed$user " + person2 + " doesnt exist";
+				return "Friend_Add_" + person1 + "_" + person2 + "_Failed_user " + person2 + " doesnt exist";
 			}
 		}
-		return "Friend$Add$" + person1 + "$" + person2 + "$Success";
+		return "Friend_Add_" + person1 + "_" + person2 + "_Success";
 	}
 	
 	public String RemoveFriend(String person1, String person2) throws Exception
@@ -255,7 +255,7 @@ public class ExcelTableProcessor
 		}
 		else
 		{
-			return "remove failed$ friend isnt in the list";
+			return "remove failed_ friend isnt in the list";
 		}
 		
 	}
