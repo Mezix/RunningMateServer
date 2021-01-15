@@ -48,8 +48,8 @@ public class ProcessUserInput {
 			}
 		}
 		
-		System.out.println("Received String_ " + receivedString);
-		System.out.println("ReturnedString _ " + returnedString);
+		System.out.println("Received String : " + receivedString);
+		System.out.println( "ReturnedString : " + returnedString);
 		
 		return returnedString;
 	}
