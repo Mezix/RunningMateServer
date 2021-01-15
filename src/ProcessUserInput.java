@@ -88,7 +88,7 @@ public class ProcessUserInput {
 	{
 		try 
 		{
-			return excelTable.AddNewPersonToDatabase(s[1], s[2], s[3], s[4], s[5]);
+			return excelTable.RegisterPerson(s[1], s[2], s[3], s[4], s[5]);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

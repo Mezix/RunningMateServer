@@ -10,7 +10,7 @@ public class Server {
         int port = 8000;
         
         //InputProcessor.ProcessString("login_Mezix_password");
-        //InputProcessor.ProcessString("register_Hande_password_Hande_Eyicalis_21");
+        //InputProcessor.ProcessString("register_Mezix2_password_Hande_Eyicalis_21");
         //InputProcessor.ProcessString("friend_add_Mezix2_Mezix");
         //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
         //InputProcessor.ProcessString("friend_get_list_Mezix");

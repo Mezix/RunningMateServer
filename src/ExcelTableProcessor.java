@@ -141,6 +141,7 @@ public class ExcelTableProcessor
 						if(sheet.getRow(i).getCell(1).getStringCellValue().equals(passwort))
 						{
 							loginOutputMessage += "success";
+							WriteToDatabase(FindRowOfPerson(username), 6, "false"); //LaufStatus
 							break;
 						}
 						else
@@ -156,10 +157,11 @@ public class ExcelTableProcessor
 			loginOutputMessage += "failed_username";
 		}
 		
+		
 		return loginOutputMessage;
 	}
 	
-	public String AddNewPersonToDatabase(String username, String passwort, String firstName, String lastName, String age) throws Exception
+	public String RegisterPerson(String username, String passwort, String firstName, String lastName, String age) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -179,12 +181,13 @@ public class ExcelTableProcessor
 		WriteToDatabase(numberOfRows, 2, firstName);
 		WriteToDatabase(numberOfRows, 3, lastName);
 		WriteToDatabase(numberOfRows, 4, age);
+		WriteToDatabase(numberOfRows, 6, "false"); //LaufStatus
+		WriteToDatabase(numberOfRows, 9, "0"); //FitnessLevel
 		
 		InitialiseStopper(numberOfRows);
 		
 		return "registration_success";
 	}
-	
 	
 	//FRIENDS
 	
@@ -359,7 +362,10 @@ public class ExcelTableProcessor
 			return "Person does not exist";
 		}
 	}
-	
+	public String JoinRun() throws Exception
+	{
+		return "";
+	}
 }
 	
 	    
