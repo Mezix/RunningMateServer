@@ -169,7 +169,8 @@ public class ExcelTableProcessor
 		
 		System.out.println("Registering a new User!");
 		int numberOfRows = 1 + sheet.getLastRowNum();
-		
+
+		System.out.println(numberOfRows);
 		int RowOfExistingUsername = FindRowOfPerson(username);
 		if(RowOfExistingUsername != -1)
 		{
