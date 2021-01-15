@@ -9,7 +9,9 @@ public class Server {
         ServerSocket serverSocket = null;
         int port = 8000;
         
-        InputProcessor.ProcessString("LOGIN:Mezix2:passwort");
+        InputProcessor.ProcessString("LOGIN:Felixsss:Swimmer");
+        InputProcessor.ProcessString("register:Mezix:password:Felix:Swimmer:21");
+        
         try
         {
             serverSocket = new ServerSocket(port);

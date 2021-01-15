@@ -28,10 +28,9 @@ public class ProcessUserInput {
 		else if(SplitString[0].equals("friend"))
 		{
 			SplitString[1] = SplitString[1].toLowerCase();
+			
 			if(SplitString[1].equals("get"))
 			{
-				//String syntax we are hoping for:
-				//Friend:<name here>
 				returnedString = ReturnFriend();
 			}
 			else if(SplitString[1].equals("add"))
