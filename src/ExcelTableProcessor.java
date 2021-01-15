@@ -39,14 +39,15 @@ public class ExcelTableProcessor
 	}*/
 	public String Login(String username, String passwort) throws Exception
 	{
-		boolean loginSucceeded = false;
-		
+		String loginOutputMessage = "login:";
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
 		System.out.println("Attempting Login of User: "+ username);
 		int numberOfRows = 1 + sheet.getLastRowNum();
+
+		boolean usernameExists = false;
 		for(int i = 0; i < numberOfRows; i++)
 		{
 			if(sheet.getRow(i) != null)
@@ -55,24 +56,26 @@ public class ExcelTableProcessor
 				{
 					if(sheet.getRow(i).getCell(0).getStringCellValue().equals(username))
 					{
+						usernameExists = true;
 						if(sheet.getRow(i).getCell(1).getStringCellValue().equals(passwort))
 						{
-							loginSucceeded = true;
+							loginOutputMessage += "success";
 							break;
+						}
+						else
+						{
+							loginOutputMessage += "failed:password";
 						}
 					}
 				}
 			}
 		}
+		if(!usernameExists)
+		{
+			loginOutputMessage += "failed:username";
+		}
 		
-		if(loginSucceeded)
-		{
-			return"login:success";
-		}
-		else
-		{
-			return "login:failed";
-		}
+		return loginOutputMessage;
 	}
 	
 	public String AddNewPersonToDatabase(String username, String passwort, String firstName, String lastName, String age) throws Exception
