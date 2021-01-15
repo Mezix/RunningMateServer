@@ -11,6 +11,10 @@ public class Server {
         
         //InputProcessor.ProcessString("LOGIN:Mezix:password");
         //InputProcessor.ProcessString("register:Mezix:password:Felix:Swimmer:21");
+        //InputProcessor.ProcessString("friend:add:Mezix2:Mezix");
+        //InputProcessor.ProcessString("friend:remove:Enric:Mezix");
+        //InputProcessor.ProcessString("friend:get:list:Mezix");
+        
         
         try
         {

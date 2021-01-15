@@ -21,8 +21,6 @@ public class ProcessUserInput {
 		}
 		else if(SplitString[0].equals("register"))
 		{
-			//String Syntax we need:
-			//Register:<Username>:<Password>:<DisplayName>:<Age> (MORE TO COME HERE)
 			returnedString = RegisterUser(SplitString);
 		}
 		else if(SplitString[0].equals("friend"))
@@ -31,13 +29,22 @@ public class ProcessUserInput {
 			
 			if(SplitString[1].equals("get"))
 			{
-				returnedString = ReturnFriend();
+				if(SplitString[2].equals("list"))
+				{
+					returnedString = GetFriendsList(SplitString[3]);
+				}
+				if(SplitString[2].equals("allInfo"))
+				{
+					returnedString = GetFriendAllInfo(SplitString[3]);
+				}
 			}
 			else if(SplitString[1].equals("add"))
 			{
-				//Add a friend to another persons list:
-				//Friend:Add:<Felix>:<Enric> (adds felix to enrics friend list)
-				returnedString = AddFriend(SplitString[3], SplitString[4]);
+				returnedString = AddFriend(SplitString[2], SplitString[3]);
+			}
+			else if(SplitString[1].equals("remove"))
+			{
+				returnedString = RemoveFriend(SplitString[2], SplitString[3]);
 			}
 		}
 		
@@ -67,16 +74,47 @@ public class ProcessUserInput {
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
-			return "Adding Person caused Exception";
+			return "Registering Person caused Exception";
 		}
 	}
-	public String ReturnFriend()
+	public String GetFriendsList(String username)
+	{
+		try 
+		{
+			return excelTable.GetFriendList(username);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Adding Friend caused Exception";
+		}
+	}
+	public String GetFriendAllInfo(String username)
 	{
 		return "Heres your friend (kinda)";	
 	}
-	public String AddFriend(String FriendToAdd, String PersonsListToAddTo)
+	public String AddFriend(String person1, String person2) //Adds person1, to person 2's friendlist
 	{
-		return "Added Friend maybe (test)";
+		try
+		{
+			return excelTable.AddFriend(person1, person2);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Adding Friend caused Exception";
+		}
 	}
-	
+	public String RemoveFriend(String person1, String person2)
+	{
+		try
+		{
+			return excelTable.RemoveFriend(person1, person2);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Removing Friend caused Exception";
+		}
+	}
 }
