@@ -109,6 +109,11 @@ public class ExcelTableProcessor
 		return false;
 	}
 	
+	private void InitialiseStopper(int row) throws Exception
+	{
+		WriteToDatabase(row, 10, "END");
+	}
+	
 	//Methods called by ProcessUserInput
 	
 	public String Login(String username, String passwort) throws Exception
@@ -174,6 +179,8 @@ public class ExcelTableProcessor
 		WriteToDatabase(numberOfRows, 2, firstName);
 		WriteToDatabase(numberOfRows, 3, lastName);
 		WriteToDatabase(numberOfRows, 4, age);
+		
+		InitialiseStopper(numberOfRows);
 		
 		return "registration_success";
 	}
@@ -300,7 +307,7 @@ public class ExcelTableProcessor
 				}
 				else
 				{
-					returnString += "_";
+					returnString += "null_";
 				}
 			
 			}
@@ -308,8 +315,7 @@ public class ExcelTableProcessor
 		}
 		else
 		{
-			return "Person not found!";
-			
+			return "Person not found!";		
 		}
 	}
 	
