@@ -37,6 +37,7 @@ public class ExcelTableProcessor
 		fileOuput.close();
 		System.out.println("Data entered in a Data excel file");
 	}*/
+	
 	public String Login(String username, String passwort) throws Exception
 	{
 		String loginOutputMessage = "login:";
@@ -94,7 +95,7 @@ public class ExcelTableProcessor
 				{
 					if(sheet.getRow(i).getCell(0).getStringCellValue().equals(username))
 					{
-						return "registration:failed:username";
+						return "registration:failed:username:exists";
 					}
 				}
 			}
