@@ -9,11 +9,11 @@ public class Server {
         ServerSocket serverSocket = null;
         int port = 8000;
         
-        //InputProcessor.ProcessString("LOGIN:Mezix:password");
-        //InputProcessor.ProcessString("register:Mezix:password:Felix:Swimmer:21");
-        //InputProcessor.ProcessString("friend:add:Mezix2:Mezix");
-        //InputProcessor.ProcessString("friend:remove:Enric:Mezix");
-        //InputProcessor.ProcessString("friend:get:list:Mezix");
+        //InputProcessor.ProcessString("LOGIN$Mezix$password");
+        //InputProcessor.ProcessString("register$Mezix$password$Felix$Swimmer$21");
+        //InputProcessor.ProcessString("friend$add$Mezix2$Mezix");
+        //InputProcessor.ProcessString("friend$remove$Enric$Mezix");
+        //InputProcessor.ProcessString("friend$get$list$Mezix");
         
         
         try
@@ -24,7 +24,7 @@ public class Server {
         }
         catch (IOException e)
         {
-            System.err.println("Could not listen on port:" + port);
+            System.err.println("Could not listen on port$" + port);
             System.exit(1);
         }
 
@@ -50,7 +50,7 @@ public class Server {
             String input;
             while ((input = in.readLine()) != null)
             {
-                System.out.println("Received: " + input);
+                System.out.println("Received$ " + input);
                 
                 if(input.equals("Bye"))
                     break;

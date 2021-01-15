@@ -9,7 +9,7 @@ public class ProcessUserInput {
 		
 		//Split String so we can process it
 		
-		String[] SplitString = receivedString.split(":");
+		String[] SplitString = receivedString.split("$");
 		
 		SplitString[0] = SplitString[0].toLowerCase(); //Lowercase the command part of the string so we dont have frustrating case issues!
 		
@@ -48,8 +48,8 @@ public class ProcessUserInput {
 			}
 		}
 		
-		System.out.println("Received String: " + receivedString);
-		System.out.println("ReturnedString : " + returnedString);
+		System.out.println("Received String$ " + receivedString);
+		System.out.println("ReturnedString $ " + returnedString);
 		
 		return returnedString;
 	}
