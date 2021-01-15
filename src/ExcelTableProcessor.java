@@ -108,6 +108,7 @@ public class ExcelTableProcessor
 		}
 		return false;
 	}
+	
 	//Methods called by ProcessUserInput
 	
 	public String Login(String username, String passwort) throws Exception
@@ -176,6 +177,9 @@ public class ExcelTableProcessor
 		
 		return "registration_success";
 	}
+	
+	
+	//FRIENDS
 	
 	public String AddFriend(String person1, String person2) throws Exception
 	{
@@ -278,6 +282,78 @@ public class ExcelTableProcessor
 			return username + " does not exist!";
 		}
 	}
+	public String GetFriendAllInfo(String user) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+	
+		int row = FindRowOfPerson(user);
+		if(row != -1)
+		{
+			String returnString = "";
+			for(int i = 0; i < sheet.getRow(row).getLastCellNum(); i++)
+			{
+				if(sheet.getRow(row).getCell(i) != null)
+				{
+					returnString += sheet.getRow(row).getCell(i).getStringCellValue() + "_";
+				}
+				else
+				{
+					returnString += "_";
+				}
+			
+			}
+			return returnString;
+		}
+		else
+		{
+			return "Person not found!";
+			
+		}
+	}
+	
+	//LAUFEN
+	
+	public String StartRun(String time, String user, String location) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int row = FindRowOfPerson(user);
+		if(row != -1)
+		{
+			WriteToDatabase(row, 6, "true");
+			WriteToDatabase(row, 7, location);
+			WriteToDatabase(row, 8, time);
+			return "Run Started!";
+		}
+		else
+		{
+			return "Person does not exist";
+		}
+	}
+	public String StopRun(String user) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+	
+		int row = FindRowOfPerson(user);
+		if(row != -1)
+		{
+			WriteToDatabase(row, 6, "false");
+			WriteToDatabase(row, 7, "");
+			WriteToDatabase(row, 8, "");
+			return "Run Stopped!";
+		}
+		else
+		{
+			return "Person does not exist";
+		}
+	}
+	
 }
 	
 	    

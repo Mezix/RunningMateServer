@@ -47,9 +47,26 @@ public class ProcessUserInput {
 				returnedString = RemoveFriend(SplitString[2], SplitString[3]);
 			}
 		}
+		else if(SplitString[0].equals("run"))
+		{
+			SplitString[1] = SplitString[1].toLowerCase();
+			
+			if(SplitString[1].equals("start"))
+			{
+				returnedString = StartRun(SplitString[2], SplitString[3], SplitString[4]);	
+			}
+			else if(SplitString[1].equals("stop"))
+			{
+				returnedString = StopRun(SplitString[2]);	
+			}
+			else if(SplitString[1].equals("join")) 
+			{
+				
+			}
+		}
 		
 		System.out.println("Received String : " + receivedString);
-		System.out.println( "ReturnedString : " + returnedString);
+		System.out.println("Returned String : " + returnedString);
 		
 		return returnedString;
 	}
@@ -78,6 +95,9 @@ public class ProcessUserInput {
 			return "Registering Person caused Exception";
 		}
 	}
+	
+	//FRIEND
+	
 	public String GetFriendsList(String username)
 	{
 		try 
@@ -92,7 +112,15 @@ public class ProcessUserInput {
 	}
 	public String GetFriendAllInfo(String username)
 	{
-		return "Heres your friend (kinda)";	
+		try
+		{
+			return excelTable.GetFriendAllInfo(username);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Stopping Run caused Exception";
+		}
 	}
 	public String AddFriend(String person1, String person2) //Adds person1, to person 2's friendlist
 	{
@@ -116,6 +144,33 @@ public class ProcessUserInput {
 		{
 			e.printStackTrace();
 			return "Removing Friend caused Exception";
+		}
+	}
+
+	//RUN
+	
+	public String StartRun(String date, String user, String location)
+	{
+		try
+		{
+			return excelTable.StartRun(date, user, location);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Starting Run caused Exception";
+		}
+	}
+	public String StopRun(String user)
+	{
+		try
+		{
+			return excelTable.StopRun(user);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Stopping Run caused Exception";
 		}
 	}
 }

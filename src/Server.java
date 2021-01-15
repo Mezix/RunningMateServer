@@ -9,12 +9,14 @@ public class Server {
         ServerSocket serverSocket = null;
         int port = 8000;
         
-        InputProcessor.ProcessString("LOGIN_Mezix_password");
-        //InputProcessor.ProcessString("register:Mezix:password:Felix:Swimmer:21");
-        //InputProcessor.ProcessString("friend:add:Mezix2:Mezix");
-        //InputProcessor.ProcessString("friend:remove:Enric:Mezix");
-        //InputProcessor.ProcessString("friend:get:list:Mezix");
-        
+        //InputProcessor.ProcessString("login_Mezix_password");
+        //InputProcessor.ProcessString("register_Mezix_password_Felix_Swimmer_21");
+        //InputProcessor.ProcessString("friend_add_Mezix2_Mezix");
+        //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
+        //InputProcessor.ProcessString("friend_get_list_Mezix");
+        //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
+        //InputProcessor.ProcessString("Run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
+        //InputProcessor.ProcessString("run_stop_Mezix");
         
         try
         {
