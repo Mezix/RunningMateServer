@@ -421,6 +421,12 @@ public class ExcelTableProcessor
 	public String JoinRun(String UserJoining, String UserBeingJoined) throws Exception
 	{
 		int UserJoiningRow = FindRowOfPerson(UserJoining);
+		int UserBeingJoinedRow = FindRowOfPerson(UserBeingJoined);
+		
+		if(UserJoiningRow != -1 && UserBeingJoinedRow != -1)
+		{
+			
+		}
 		return "";
 	}
 
@@ -450,7 +456,12 @@ public class ExcelTableProcessor
 					float UserDistance = GetDistanceBetweenTwoUsersLatLng(sheet.getRow(rowOfUser).getCell(7).getStringCellValue(), sheet.getRow(i).getCell(7).getStringCellValue());
 					if(UserDistance != -1 && UserDistance <= maxDistance)
 					{
-						peopleInArea += sheet.getRow(i).getCell(0).getStringCellValue() + "_";
+						peopleInArea += sheet.getRow(i).getCell(0).getStringCellValue() 
+						+ ";"
+						+ sheet.getRow(i).getCell(7).getStringCellValue()
+						+ ";"
+						+ sheet.getRow(i).getCell(13).getStringCellValue()
+						+ "_";
 					}
 					
 				}
