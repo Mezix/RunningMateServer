@@ -47,29 +47,30 @@ public class ProcessUserInput {
 				returnedString = RemoveFriend(SplitString[2], SplitString[3]);
 			}
 		}
-		else if(SplitString[0].equals("run"))
+		else if(SplitString[0].equals("activity"))
 		{
 			SplitString[1] = SplitString[1].toLowerCase();
+			SplitString[2] = SplitString[2].toLowerCase();
 			
-			if(SplitString[1].equals("start"))
+			if(SplitString[2].equals("start"))
 			{
-				returnedString = StartActivity(SplitString[2], SplitString[3], SplitString[4]);	
+				returnedString = StartActivity(SplitString[3], SplitString[4], SplitString[5]);	
 			}
-			else if(SplitString[1].equals("stop"))
+			else if(SplitString[2].equals("stop"))
 			{
-				returnedString = StopActivity(SplitString[2]);	
+				returnedString = StopActivity(SplitString[3]);	
 			}
-			else if(SplitString[1].equals("join")) 
+			else if(SplitString[2].equals("join")) 
 			{
-				returnedString = JoinActivity(SplitString[2], SplitString[3]);
+				returnedString = JoinActivity(SplitString[3], SplitString[4]);
 			}
-			else if(SplitString[1].equals("leave")) 
+			else if(SplitString[2].equals("leave")) 
 			{
-				returnedString = LeaveActivity(SplitString[2], SplitString[3]);
+				returnedString = LeaveActivity(SplitString[3], SplitString[4]);
 			}
-			else if(SplitString[1].equals("getpeopleinarea")) 
+			else if(SplitString[2].equals("getpeopleinarea")) 
 			{
-				returnedString = GetPeopleInArea(SplitString[2], SplitString[3]);
+				returnedString = GetPeopleInArea(SplitString[3], SplitString[4]);
 			}
 		}
 		

@@ -547,16 +547,18 @@ public class ExcelTableProcessor
 					float UserDistance = GetDistanceBetweenTwoUsersLatLng(sheet.getRow(rowOfUser).getCell(7).getStringCellValue(), sheet.getRow(i).getCell(7).getStringCellValue());
 					if(UserDistance != -1 && UserDistance <= maxDistance)
 					{
-						peopleInArea += sheet.getRow(i).getCell(0).getStringCellValue() 
+						peopleInArea += sheet.getRow(i).getCell(0).getStringCellValue() //Username
 						+ ";"
-						+ sheet.getRow(i).getCell(7).getStringCellValue()
+						+ sheet.getRow(i).getCell(7).getStringCellValue() //Latitude/Longitude
+						+ ";"
+						+ sheet.getRow(i).getCell(8).getStringCellValue() //Zeit der Activity
+						+ ";"
+						+ sheet.getRow(i).getCell(16).getStringCellValue() //Art der Activity
 						+ ";"
 						+ sheet.getRow(i).getCell(13).getStringCellValue()
 						+ "_";
 					}
-					
 				}
-
 			}
 			return peopleInArea;
 		}
