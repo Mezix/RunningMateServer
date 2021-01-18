@@ -11,14 +11,14 @@ public class Server {
         int port = 8000;
         
         //InputProcessor.ProcessString("login_Mezix_password");
-        InputProcessor.ProcessString("register_Hande2_password_Hande_Eyicalis_21");
+        //InputProcessor.ProcessString("register_Hande2_password_Hande_Eyicalis_21");
         //InputProcessor.ProcessString("friend_add_Mezix2_Mezix");
         //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
         //InputProcessor.ProcessString("friend_get_list_Mezix");
         //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
         //InputProcessor.ProcessString("Run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("run_stop_Mezix");
-        //InputProcessor.ProcessString("Run_getpeopleinarea_Mezix_5000");
+        //InputProcessor.ProcessString("Run_getpeopleinarea_Enric_5000");
         
         try
         {

@@ -159,7 +159,7 @@ public class ExcelTableProcessor
 										*Math.cos(Math.PI*LngOfUser1/180 - Math.PI*LngOfUser2/180)
 										)
 										*6378;
-			System.out.println(distance);
+			//System.out.println(distance);
 			return (float) distance;
 		}
 		else
@@ -420,6 +420,7 @@ public class ExcelTableProcessor
 	}
 	public String JoinRun(String UserJoining, String UserBeingJoined) throws Exception
 	{
+		int UserJoiningRow = FindRowOfPerson(UserJoining);
 		return "";
 	}
 

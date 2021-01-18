@@ -193,7 +193,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.ReturnPeopleWithActivitiesInArea("Mezix", Float.parseFloat(distance));
+			return excelTable.ReturnPeopleWithActivitiesInArea(Username, Float.parseFloat(distance));
 		}	
 		catch (Exception e)
 		{
