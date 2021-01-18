@@ -61,7 +61,7 @@ public class ProcessUserInput {
 			}
 			else if(SplitString[1].equals("join")) 
 			{
-				returnedString = JoinRun();
+				returnedString = JoinRun(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("getpeopleinarea")) 
 			{
@@ -177,11 +177,11 @@ public class ProcessUserInput {
 			return "Stopping Run caused Exception";
 		}
 	}
-	public String JoinRun()
+	public String JoinRun(String userJoining, String userBeingJoined)
 		{
 		try
 		{
-			return excelTable.JoinRun();
+			return excelTable.JoinRun(userJoining, userBeingJoined);
 		}	
 		catch (Exception e)
 		{

@@ -418,7 +418,7 @@ public class ExcelTableProcessor
 			return "Person does not exist";
 		}
 	}
-	public String JoinRun() throws Exception
+	public String JoinRun(String UserJoining, String UserBeingJoined) throws Exception
 	{
 		return "";
 	}
