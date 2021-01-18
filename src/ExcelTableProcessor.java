@@ -90,7 +90,7 @@ public class ExcelTableProcessor
 	
 	private void InitialiseStopper(int row) throws Exception
 	{
-		WriteToDatabase(row, 10, "END");
+		WriteToDatabase(row, 50, "END");
 	}
 	private List<Integer> ReturnAllRowsOfPeopleWithActivities() throws Exception
 	{	
@@ -238,7 +238,7 @@ public class ExcelTableProcessor
 		WriteToDatabase(numberOfRows, 3, lastName);
 		WriteToDatabase(numberOfRows, 4, age);
 		WriteToDatabase(numberOfRows, 6, "false"); //LaufStatus
-		WriteToDatabase(numberOfRows, 9, "0"); //FitnessLevel
+		WriteToDatabase(numberOfRows, 13, "0"); //FitnessLevel
 		
 		InitialiseStopper(numberOfRows);
 		
