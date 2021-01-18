@@ -222,7 +222,7 @@ public class ExcelTableProcessor
 						if(sheet.getRow(i).getCell(1).getStringCellValue().equals(passwort))
 						{
 							loginOutputMessage += "success";
-							WriteToDatabase(FindRowOfPerson(username), 6, "false"); //ActivityStatus
+							//WriteToDatabase(FindRowOfPerson(username), 6, "false"); //ActivityStatus
 							break;
 						}
 						else
@@ -484,7 +484,6 @@ public class ExcelTableProcessor
 
 		int userLeavingRow = FindRowOfPerson(userLeaving);
 		int userBeingLeftRow = FindRowOfPerson(userBeingLeft);
-			
 		if(userLeavingRow != -1 && userBeingLeftRow != -1)
 		{
 			if(PersonExistsInActivityList(userLeaving, userBeingLeft))
