@@ -464,6 +464,9 @@ public class ExcelTableProcessor
 				}
 				stringToWrite += UserJoining + ";";
 				WriteToDatabase(UserBeingJoinedRow, 9, stringToWrite);
+				
+				//now leave our own run if we have one!
+				StopRun(UserJoining);
 				return "User joining suceeded!";
 			}
 			else
@@ -488,18 +491,33 @@ public class ExcelTableProcessor
 		{
 			if(PersonExistsInActivityList(userLeaving, userBeingLeft))
 			{	
-				
-				return "";
+				if(sheet.getRow(userBeingLeftRow).getCell(9) != null)
+				{
+					String newActivityList = "";
+					String[] splitString = sheet.getRow(userBeingLeftRow).getCell(9).getStringCellValue().split(";");
+					for(int i = 0; i < splitString.length; i++)
+					{
+						if(!splitString[i].equals(userLeaving))
+						{
+							newActivityList += splitString[i] + ";";
+						}
+					}
+					return "User removed from Activity!";
+				}
+				else
+				{
+					return "User does not have any users in his activity list!";
+				}
 			}
 			else
 			{
-				return "";
+				return "User was not part of the Activity!";
 			}
 			
 		}
 		else
 		{
-			return "";
+			return "One of the users does not exist!";
 		}
 	}
 	public String ReturnPeopleWithActivitiesInArea(String user, float maxDistance) throws Exception

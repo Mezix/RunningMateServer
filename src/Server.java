@@ -19,7 +19,8 @@ public class Server {
         //InputProcessor.ProcessString("Run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("run_stop_Mezix");
         //ProcessString("Run_getpeopleinarea_Enric_5000");
-        //InputProcessor.ProcessString("run_join_Phine_Enric");
+        InputProcessor.ProcessString("run_join_Phine_Enric");
+        InputProcessor.ProcessString("run_leave_Phine_Enric");
         
         try
         {
