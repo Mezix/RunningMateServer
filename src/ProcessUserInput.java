@@ -61,7 +61,11 @@ public class ProcessUserInput {
 			}
 			else if(SplitString[1].equals("join")) 
 			{
-				
+				returnedString = JoinRun();
+			}
+			else if(SplitString[1].equals("getpeopleinarea")) 
+			{
+				returnedString = GetPeopleInArea(SplitString[2], SplitString[3]);
 			}
 		}
 		
@@ -166,6 +170,30 @@ public class ProcessUserInput {
 		try
 		{
 			return excelTable.StopRun(user);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Stopping Run caused Exception";
+		}
+	}
+	public String JoinRun()
+		{
+		try
+		{
+			return excelTable.JoinRun();
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Stopping Run caused Exception";
+		}
+	}
+	public String GetPeopleInArea(String Username, String distance)
+	{
+		try
+		{
+			return excelTable.ReturnPeopleWithActivitiesInArea("Mezix", Float.parseFloat(distance));
 		}	
 		catch (Exception e)
 		{
