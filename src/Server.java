@@ -19,8 +19,8 @@ public class Server {
         //InputProcessor.ProcessString("Run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("run_stop_Mezix");
         //ProcessString("Run_getpeopleinarea_Enric_5000");
-        InputProcessor.ProcessString("run_join_Phine_Enric");
-        InputProcessor.ProcessString("run_leave_Phine_Enric");
+        //InputProcessor.ProcessString("run_join_Phine_Enric");
+        //InputProcessor.ProcessString("run_leave_Phine_Enric");
         
         try
         {
@@ -46,7 +46,9 @@ public class Server {
                 clientSocket = serverSocket.accept();
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println("______________________");
                 System.out.println("Connection Established");
+                System.out.println("______________________");
             }
             catch (IOException e)
             {

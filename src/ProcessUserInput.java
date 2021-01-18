@@ -53,15 +53,19 @@ public class ProcessUserInput {
 			
 			if(SplitString[1].equals("start"))
 			{
-				returnedString = StartRun(SplitString[2], SplitString[3], SplitString[4]);	
+				returnedString = StartActivity(SplitString[2], SplitString[3], SplitString[4]);	
 			}
 			else if(SplitString[1].equals("stop"))
 			{
-				returnedString = StopRun(SplitString[2]);	
+				returnedString = StopActivity(SplitString[2]);	
 			}
 			else if(SplitString[1].equals("join")) 
 			{
-				returnedString = JoinRun(SplitString[2], SplitString[3]);
+				returnedString = JoinActivity(SplitString[2], SplitString[3]);
+			}
+			else if(SplitString[1].equals("leave")) 
+			{
+				returnedString = LeaveActivity(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("getpeopleinarea")) 
 			{
@@ -153,7 +157,7 @@ public class ProcessUserInput {
 
 	//RUN
 	
-	public String StartRun(String date, String user, String location)
+	public String StartActivity(String date, String user, String location)
 	{
 		try
 		{
@@ -162,10 +166,10 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Starting Run caused Exception";
+			return "Starting Activity caused Exception";
 		}
 	}
-	public String StopRun(String user)
+	public String StopActivity(String user)
 	{
 		try
 		{
@@ -174,14 +178,26 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Stopping Run caused Exception";
+			return "Stopping Activity caused Exception";
 		}
 	}
-	public String JoinRun(String userJoining, String userBeingJoined)
+	public String JoinActivity(String userJoining, String userBeingJoined)
 		{
 		try
 		{
-			return excelTable.JoinRun(userJoining, userBeingJoined);
+			return excelTable.JoinActivity(userJoining, userBeingJoined);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Stopping Activity caused Exception";
+		}
+	}
+	public String LeaveActivity(String userLeaving, String userBeingLeft)
+	{
+		try
+		{
+			return excelTable.LeaveActivity(userLeaving, userBeingLeft);
 		}	
 		catch (Exception e)
 		{

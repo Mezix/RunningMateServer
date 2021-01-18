@@ -444,29 +444,29 @@ public class ExcelTableProcessor
 			return "Person does not exist";
 		}
 	}
-	public String JoinRun(String UserJoining, String UserBeingJoined) throws Exception
+	public String JoinActivity(String userJoining, String userBeingJoined) throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 
-		int UserJoiningRow = FindRowOfPerson(UserJoining);
-		int UserBeingJoinedRow = FindRowOfPerson(UserBeingJoined);
+		int userJoiningRow = FindRowOfPerson(userJoining);
+		int userBeingJoinedRow = FindRowOfPerson(userBeingJoined);
 		
-		if(UserJoiningRow != -1 && UserBeingJoinedRow != -1)
+		if(userJoiningRow != -1 && userBeingJoinedRow != -1)
 		{
-			if(!PersonExistsInActivityList(UserJoining, UserBeingJoined))
+			if(!PersonExistsInActivityList(userJoining, userBeingJoined))
 			{	
-				String stringToWrite = "";
-				if(sheet.getRow(UserBeingJoinedRow).getCell(9) != null)
+				String newActivityList = "";
+				if(sheet.getRow(userBeingJoinedRow).getCell(9) != null)
 				{
-					stringToWrite = sheet.getRow(UserBeingJoinedRow).getCell(9).getStringCellValue();
+					newActivityList = sheet.getRow(userBeingJoinedRow).getCell(9).getStringCellValue();
 				}
-				stringToWrite += UserJoining + ";";
-				WriteToDatabase(UserBeingJoinedRow, 9, stringToWrite);
+				newActivityList += userJoining + ";";
+				WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
 				
 				//now leave our own run if we have one!
-				StopRun(UserJoining);
+				StopRun(userJoining);
 				return "User joining suceeded!";
 			}
 			else
@@ -479,7 +479,7 @@ public class ExcelTableProcessor
 			return "One of these users doesnt exist!";
 		}
 	}
-	public String LeaveRun(String userLeaving, String userBeingLeft) throws Exception
+	public String LeaveActivity(String userLeaving, String userBeingLeft) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -502,6 +502,7 @@ public class ExcelTableProcessor
 							newActivityList += splitString[i] + ";";
 						}
 					}
+					WriteToDatabase(userBeingLeftRow, 9, newActivityList);
 					return "User removed from Activity!";
 				}
 				else
