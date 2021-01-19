@@ -452,36 +452,44 @@ public class ExcelTableProcessor
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
-
-		int userJoiningRow = FindRowOfUser(userJoining);
-		int userBeingJoinedRow = FindRowOfUser(userBeingJoined);
 		
-		if(userJoiningRow != -1 && userBeingJoinedRow != -1)
+		if(userJoining.equals(userBeingJoined))
 		{
-			if(!PersonExistsInActivityList(userJoining, userBeingJoined))
-			{	
-				UserLeaveAllActivities(userJoining); //remove us from all other activities
+			int userJoiningRow = FindRowOfUser(userJoining);
+			int userBeingJoinedRow = FindRowOfUser(userBeingJoined);
+		
+			if(userJoiningRow != -1 && userBeingJoinedRow != -1)
+			{
+				if(!PersonExistsInActivityList(userJoining, userBeingJoined))
+				{	
+					UserLeaveAllActivities(userJoining); //remove us from all other activities
 				
-				String newActivityList = "";
-				if(sheet.getRow(userBeingJoinedRow).getCell(9) != null)
-				{
-					newActivityList = sheet.getRow(userBeingJoinedRow).getCell(9).getStringCellValue();
+					String newActivityList = "";
+					if(sheet.getRow(userBeingJoinedRow).getCell(9) != null)
+					{
+						newActivityList = sheet.getRow(userBeingJoinedRow).getCell(9).getStringCellValue();
+					}
+					newActivityList += userJoining + ";";
+					WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
+					
+					StopActivityOfUser(userJoining); //now leave our own run if we have one!
+					return "User joining suceeded!";
 				}
-				newActivityList += userJoining + ";";
-				WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
-				
-				StopActivityOfUser(userJoining); //now leave our own run if we have one!
-				return "User joining suceeded!";
+				else
+				{
+					return "User already joined!";
+				}
 			}
 			else
 			{
-				return "User already joined!";
+				return "One of these users doesnt exist!";
 			}
 		}
 		else
 		{
-			return "One of these users doesnt exist!";
+			return "Cant join yourself!";
 		}
+		
 	}
 	public String LeaveActivity(String userLeaving, String userBeingLeft) throws Exception
 	{
