@@ -118,7 +118,7 @@ public class ExcelTableProcessor
 		WriteToDatabase(row, 50, "END");
 	}
 	
-	private List<Integer> ReturnAllRowsOfPeopleWithActivities() throws Exception
+	private List<Integer> ReturnAllRowsWithActivities() throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -536,7 +536,7 @@ public class ExcelTableProcessor
 		if(userRow != -1)
 		{
 			String debugString = username + " has left:";
-			List<Integer> allRowsWithActivities = ReturnAllRowsOfPeopleWithActivities();
+			List<Integer> allRowsWithActivities = ReturnAllRowsWithActivities();
 			for(int i : allRowsWithActivities)
 			{
 				if(PersonExistsInActivityList(username, sheet.getRow(i).getCell(0).getStringCellValue()))
@@ -570,7 +570,7 @@ public class ExcelTableProcessor
 		else
 		{
 			String peopleInArea = "";
-			List<Integer> PeopleRowList = ReturnAllRowsOfPeopleWithActivities();
+			List<Integer> PeopleRowList = ReturnAllRowsWithActivities();
 			for(int i : PeopleRowList)
 			{
 				if(i == rowOfUser)
