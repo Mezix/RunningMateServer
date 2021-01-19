@@ -24,7 +24,7 @@ public class Server {
         //InputProcessor.ProcessString("medal_add_10streak_Mezix");
         //InputProcessor.ProcessString("medal_get_Mezix");
         //InputProcessor.ProcessString("avatar_get_Mezix");
-        //InputProcessor.ProcessString("avatar_set_Mezix_R.mipmap.avatar2");
+        //InputProcessor.ProcessString("avatar_set_Mezix_avatar2");
         
         try
         {
