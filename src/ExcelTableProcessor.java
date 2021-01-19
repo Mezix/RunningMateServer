@@ -265,6 +265,7 @@ public class ExcelTableProcessor
 		WriteToDatabase(numberOfRows, 3, lastName);
 		WriteToDatabase(numberOfRows, 4, age);
 		WriteToDatabase(numberOfRows, 6, "false"); //ActivityStatus
+		WriteToDatabase(numberOfRows, 10, "R.mipmap.avatar1"); //Avatar
 		WriteToDatabase(numberOfRows, 13, "0"); //FitnessLevel
 		
 		InitialiseStopper(numberOfRows);
@@ -656,7 +657,6 @@ public class ExcelTableProcessor
 	{
 		
 	}
-	
 	public String GetMedalsReverseOrder(String username) throws Exception
 	{	
 		//returns the medals in the reverse order, to show the newest added one first!
@@ -688,7 +688,6 @@ public class ExcelTableProcessor
 		}
 		return medals;
 	}
-	
 	public String GetMedalsCorrectOrder(String username) throws Exception
 	{	
 		//returns the medals in the reverse order, to show the newest added one first!
@@ -715,6 +714,47 @@ public class ExcelTableProcessor
 		}
 		return Medals;
 	}
+
+	//AVATAR
+	
+	public String SetAvatar(String username, String avatarReference) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			WriteToDatabase(userRow, 10, avatarReference);
+			return "Users avatar changed!";
+		}
+		else
+		{
+			return "User does not exist";
+		}
+	}
+	public String GetAvatar(String username) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			if(sheet.getRow(userRow).getCell(10) != null)
+			{
+				return sheet.getRow(userRow).getCell(10).getStringCellValue();
+			}
+			else
+			{
+				return "No avatar found!";
+			}
+		}
+		return "User does not exist";
+	}
+	
 }
 	
 	    

@@ -22,7 +22,9 @@ public class Server {
         //InputProcessor.ProcessString("activity_run_join_Phine_Enric");
         //InputProcessor.ProcessString("activity_run_leave_Phine_Enric");
         //InputProcessor.ProcessString("medal_add_10streak_Mezix");
-        InputProcessor.ProcessString("medal_get_Mezix");
+        //InputProcessor.ProcessString("medal_get_Mezix");
+        //InputProcessor.ProcessString("avatar_get_Mezix");
+        //InputProcessor.ProcessString("avatar_set_Mezix_R.mipmap.avatar2");
         
         try
         {

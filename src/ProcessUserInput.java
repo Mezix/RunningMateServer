@@ -5,7 +5,7 @@ public class ProcessUserInput {
 	
 	public String ProcessString(String receivedString)
 	{
-		String returnedString = null;
+		String serverMessage = null;
 		
 		//Split String so we can process it
 		
@@ -17,11 +17,11 @@ public class ProcessUserInput {
 		
 		if(SplitString[0].equals("login"))
 		{
-			returnedString = Login(SplitString);
+			serverMessage = Login(SplitString);
 		}
 		else if(SplitString[0].equals("register"))
 		{
-			returnedString = RegisterUser(SplitString);
+			serverMessage = RegisterUser(SplitString);
 		}
 		else if(SplitString[0].equals("friend"))
 		{
@@ -31,20 +31,20 @@ public class ProcessUserInput {
 			{
 				if(SplitString[2].equals("list"))
 				{
-					returnedString = GetFriendsList(SplitString[3]);
+					serverMessage = GetFriendsList(SplitString[3]);
 				}
 				if(SplitString[2].equals("allInfo"))
 				{
-					returnedString = GetFriendAllInfo(SplitString[3]);
+					serverMessage = GetFriendAllInfo(SplitString[3]);
 				}
 			}
 			else if(SplitString[1].equals("add"))
 			{
-				returnedString = AddFriend(SplitString[2], SplitString[3]);
+				serverMessage = AddFriend(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("remove"))
 			{
-				returnedString = RemoveFriend(SplitString[2], SplitString[3]);
+				serverMessage = RemoveFriend(SplitString[2], SplitString[3]);
 			}
 		}
 		else if(SplitString[0].equals("activity"))
@@ -54,23 +54,23 @@ public class ProcessUserInput {
 			
 			if(SplitString[2].equals("start"))
 			{
-				returnedString = StartActivity(SplitString[3], SplitString[4], SplitString[5]);	
+				serverMessage = StartActivity(SplitString[3], SplitString[4], SplitString[5]);	
 			}
 			else if(SplitString[2].equals("stop"))
 			{
-				returnedString = StopActivity(SplitString[3]);	
+				serverMessage = StopActivity(SplitString[3]);	
 			}
 			else if(SplitString[2].equals("join")) 
 			{
-				returnedString = JoinActivity(SplitString[3], SplitString[4]);
+				serverMessage = JoinActivity(SplitString[3], SplitString[4]);
 			}
 			else if(SplitString[2].equals("leave")) 
 			{
-				returnedString = LeaveActivity(SplitString[3], SplitString[4]);
+				serverMessage = LeaveActivity(SplitString[3], SplitString[4]);
 			}
 			else if(SplitString[2].equals("getpeopleinarea")) 
 			{
-				returnedString = GetPeopleInArea(SplitString[3], SplitString[4]);
+				serverMessage = GetPeopleInArea(SplitString[3], SplitString[4]);
 			}
 		}
 		else if(SplitString[0].equals("medal")) 
@@ -79,7 +79,7 @@ public class ProcessUserInput {
 			if(SplitString[1].equals("add"))
 			{
 				SplitString[2] = SplitString[2].toLowerCase();
-				returnedString = AddMedalToUser(SplitString[2], SplitString[3]);
+				serverMessage = AddMedalToUser(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("remove"))
 			{
@@ -87,18 +87,30 @@ public class ProcessUserInput {
 			}
 			else if(SplitString[1].equals("get"))
 			{
-				returnedString = GetMedalsOfUser(SplitString[2]);
+				serverMessage = GetMedalsOfUser(SplitString[2]);
+			}
+		}
+		else if(SplitString[0].equals("avatar")) 
+		{
+			SplitString[1] = SplitString[1].toLowerCase();
+			if(SplitString[1].equals("set"))
+			{
+				serverMessage = SetAvatar(SplitString[2], SplitString[3]);
+			}
+			else if(SplitString[1].equals("get"))
+			{
+				serverMessage = GetAvatar(SplitString[2]);
 			}
 		}
 		else
 		{
-			returnedString = "Not a valid command!";
+			serverMessage = "Not a valid command!";
 		}
 		
 		System.out.println("Received String : " + receivedString);
-		System.out.println("Returned String : " + returnedString);
+		System.out.println("Returned String : " + serverMessage);
 		
-		return returnedString;
+		return serverMessage;
 	}
 	
 	public String Login(String[] s)
@@ -267,6 +279,34 @@ public class ProcessUserInput {
 			return "Getting Medal caused Exception";
 		}
 	}
+	
+	//AVATAR 
+	
+	public String GetAvatar(String username)
+	{
+		try
+		{
+			return excelTable.GetAvatar(username);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Getting Avatar caused Exception";
+		}
+	}
+	public String SetAvatar(String username, String avatarRef)
+	{
+		try
+		{
+			return excelTable.SetAvatar(username, avatarRef);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Setting Avatar caused Exception";
+		}
+	}
+	
 	//CHAT
 	
 	
