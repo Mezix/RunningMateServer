@@ -615,7 +615,7 @@ public class ExcelTableProcessor
 			
 			String newMedalList = "";
 			String newlyAddedMedal = "";
-			String [] medalList = medals.split("_");
+			String [] medalList = medals.split("-");
 			String [] parsedMedal;
 			System.out.println(medalList.length);
 			int amountOfNewMedal = 0;
@@ -630,17 +630,17 @@ public class ExcelTableProcessor
 					}
 					else
 					{
-						newMedalList += medalList[i] + "_";
+						newMedalList += medalList[i] + "-";
 					}
 				}
 			}
 			if(amountOfNewMedal != 0)
 			{
-				newlyAddedMedal = medalName + ";" + amountOfNewMedal + "_";
+				newlyAddedMedal = medalName + ";" + amountOfNewMedal + "-";
 			}
 			else
 			{
-				newlyAddedMedal = medalName + ";1_";
+				newlyAddedMedal = medalName + ";1-";
 			}
 			
 			newMedalList += newlyAddedMedal;
@@ -671,10 +671,10 @@ public class ExcelTableProcessor
 			if(sheet.getRow(userRow).getCell(11) != null)
 			{
 				String oldMedals = sheet.getRow(userRow).getCell(11).getStringCellValue();
-				String [] medalList = oldMedals.split("_");
+				String [] medalList = oldMedals.split("-");
 				for(int i = medalList.length-1; i >= 0; i--)
 				{
-					medals += medalList[i] + "_";
+					medals += medalList[i] + "-";
 				}
 			}
 			else

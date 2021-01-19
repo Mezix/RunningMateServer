@@ -21,8 +21,9 @@ public class Server {
         //InputProcessor.ProcessString("activity_run_getpeopleinarea_Enric_5000");
         //InputProcessor.ProcessString("activity_run_join_Phine_Enric");
         //InputProcessor.ProcessString("activity_run_leave_Phine_Enric");
-        InputProcessor.ProcessString("medal_add_10streak_Mezix");
+        //InputProcessor.ProcessString("medal_add_10streak_Mezix");
         InputProcessor.ProcessString("medal_get_Mezix");
+        
         try
         {
             serverSocket = new ServerSocket(port);
