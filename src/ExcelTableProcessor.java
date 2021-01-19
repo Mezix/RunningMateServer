@@ -40,7 +40,7 @@ public class ExcelTableProcessor
 		fileOuput.close();
 	}
 	
-	private int FindRowOfPerson(String username) throws Exception
+	private int FindRowOfUser(String username) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -69,7 +69,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfPerson(otherUser);
+		int row = FindRowOfUser(otherUser);
 		if(row != -1)
 		{
 			if(sheet.getRow(row).getCell(5) != null)
@@ -94,7 +94,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfPerson(userBeingJoined);
+		int row = FindRowOfUser(userBeingJoined);
 		if(row != -1)
 		{
 			if(sheet.getRow(row).getCell(9) != null)
@@ -104,7 +104,7 @@ public class ExcelTableProcessor
 				{
 					if(ActivityList[i].equals(userJoining))
 					{
-						System.out.println(userJoining + " is already in " + userBeingJoined + "'s Activitylist!");
+						//System.out.println(userJoining + " is already in " + userBeingJoined + "'s Activitylist!");
 						return true;
 					}
 				}
@@ -136,6 +136,7 @@ public class ExcelTableProcessor
 					if(sheet.getRow(i).getCell(6).getStringCellValue().equals("true"))
 					{
 						RowsOfPeople.add(i);
+						
 					}
 				}
 			}
@@ -252,7 +253,7 @@ public class ExcelTableProcessor
 		int numberOfRows = 1 + sheet.getLastRowNum();
 
 		System.out.println(numberOfRows);
-		int RowOfExistingUsername = FindRowOfPerson(username);
+		int RowOfExistingUsername = FindRowOfUser(username);
 		if(RowOfExistingUsername != -1)
 		{
 			return "registration_failed_username";
@@ -271,7 +272,7 @@ public class ExcelTableProcessor
 		return "registration_success";
 	}
 	
-	//FRIENDS
+	//FREUNDE
 	
 	public String AddFriend(String person1, String person2) throws Exception
 	{
@@ -286,8 +287,8 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int person1row  = FindRowOfPerson(person1);
-		int person2row = FindRowOfPerson(person2);
+		int person1row  = FindRowOfUser(person1);
+		int person2row = FindRowOfUser(person2);
 		
 		if(person1row != -1 && person2row != -1)
 		{	
@@ -337,7 +338,7 @@ public class ExcelTableProcessor
 					newFriendslist += splitString[i] + ";";
 				}
 			}
-			int rowOfPerson2 = FindRowOfPerson(person2);
+			int rowOfPerson2 = FindRowOfUser(person2);
 			if(rowOfPerson2 != -1)
 			{
 				WriteToDatabase(rowOfPerson2, 5, newFriendslist);
@@ -356,7 +357,7 @@ public class ExcelTableProcessor
 	}
 	public String GetFriendList(String username) throws Exception
 	{
-		int rowOfUser = FindRowOfPerson(username);
+		int rowOfUser = FindRowOfUser(username);
 		if(rowOfUser != -1)
 		{
 			if(sheet.getRow(rowOfUser).getCell(5) != null)
@@ -379,7 +380,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 	
-		int row = FindRowOfPerson(user);
+		int row = FindRowOfUser(user);
 		if(row != -1)
 		{
 			String returnString = "";
@@ -405,39 +406,40 @@ public class ExcelTableProcessor
 	
 	//LAUFEN
 	
-	public String StartRun(String time, String user, String location) throws Exception
+	public String StartActivity(String time, String username, String location) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfPerson(user);
+		int row = FindRowOfUser(username);
 		if(row != -1)
 		{
+			UserLeaveAllActivities(username);
 			WriteToDatabase(row, 6, "true");
 			WriteToDatabase(row, 7, location);
 			WriteToDatabase(row, 8, time);
-			return "Run Started!";
+			return "Activity Started!";
 		}
 		else
 		{
 			return "Person does not exist";
 		}
 	}
-	public String StopRun(String user) throws Exception
+	public String StopActivityOfUser(String user) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 	
-		int row = FindRowOfPerson(user);
+		int row = FindRowOfUser(user);
 		if(row != -1)
 		{
-			WriteToDatabase(row, 6, "false");
-			WriteToDatabase(row, 7, "");
-			WriteToDatabase(row, 8, "");
-			WriteToDatabase(row, 9, "");
-			return "Run Stopped!";
+			WriteToDatabase(row, 6, "false");  //stops this activity from being found by ReturnAllRowsOfPeopleWithActivities()
+			WriteToDatabase(row, 7, ""); //activity position
+			WriteToDatabase(row, 8, ""); //activity start time
+			WriteToDatabase(row, 9, ""); //deletes the activity list and everyone in it
+			return "Activity Stopped!";
 		}
 		else
 		{
@@ -450,13 +452,15 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 
-		int userJoiningRow = FindRowOfPerson(userJoining);
-		int userBeingJoinedRow = FindRowOfPerson(userBeingJoined);
+		int userJoiningRow = FindRowOfUser(userJoining);
+		int userBeingJoinedRow = FindRowOfUser(userBeingJoined);
 		
 		if(userJoiningRow != -1 && userBeingJoinedRow != -1)
 		{
 			if(!PersonExistsInActivityList(userJoining, userBeingJoined))
 			{	
+				UserLeaveAllActivities(userJoining); //remove us from all other activities
+				
 				String newActivityList = "";
 				if(sheet.getRow(userBeingJoinedRow).getCell(9) != null)
 				{
@@ -465,8 +469,7 @@ public class ExcelTableProcessor
 				newActivityList += userJoining + ";";
 				WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
 				
-				//now leave our own run if we have one!
-				StopRun(userJoining);
+				StopActivityOfUser(userJoining); //now leave our own run if we have one!
 				return "User joining suceeded!";
 			}
 			else
@@ -485,8 +488,8 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 
-		int userLeavingRow = FindRowOfPerson(userLeaving);
-		int userBeingLeftRow = FindRowOfPerson(userBeingLeft);
+		int userLeavingRow = FindRowOfUser(userLeaving);
+		int userBeingLeftRow = FindRowOfUser(userBeingLeft);
 		if(userLeavingRow != -1 && userBeingLeftRow != -1)
 		{
 			if(PersonExistsInActivityList(userLeaving, userBeingLeft))
@@ -521,13 +524,44 @@ public class ExcelTableProcessor
 			return "One of the users does not exist!";
 		}
 	}
+	
+	public void UserLeaveAllActivities(String username) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			String debugString = username + " has left:";
+			List<Integer> allRowsWithActivities = ReturnAllRowsOfPeopleWithActivities();
+			for(int i : allRowsWithActivities)
+			{
+				if(PersonExistsInActivityList(username, sheet.getRow(i).getCell(0).getStringCellValue()))
+				{
+					LeaveActivity(username, sheet.getRow(i).getCell(0).getStringCellValue());
+					debugString += " " + sheet.getRow(i).getCell(0).getStringCellValue();
+				}
+			}
+			if(debugString.equals(username + " has left:"))
+			{
+				//System.out.println("User was not in any activities");
+			}
+			//System.out.println(debugString);
+			}
+		else
+		{
+			//System.out.println("User does not exist");
+		}
+	}
 	public String ReturnPeopleWithActivitiesInArea(String user, float maxDistance) throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int rowOfUser = FindRowOfPerson(user);
+		int rowOfUser = FindRowOfUser(user);
 		if(rowOfUser == -1)
 		{
 			return "UserNotFound!";
@@ -555,7 +589,7 @@ public class ExcelTableProcessor
 						+ ";"
 						+ sheet.getRow(i).getCell(16).getStringCellValue() //Art der Activity
 						+ ";"
-						+ sheet.getRow(i).getCell(13).getStringCellValue()
+						+ sheet.getRow(i).getCell(13).getStringCellValue() //FitnessLevel
 						+ "_";
 					}
 				}
@@ -563,6 +597,123 @@ public class ExcelTableProcessor
 			return peopleInArea;
 		}
 		
+	}
+
+	//MEDAILLEN
+	
+	public String AddMedalToUser(String medalName, String username) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		String medals = "";
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			medals = GetMedalsCorrectOrder(username);
+			
+			String newMedalList = "";
+			String newlyAddedMedal = "";
+			String [] medalList = medals.split("_");
+			String [] parsedMedal;
+			System.out.println(medalList.length);
+			int amountOfNewMedal = 0;
+			if(!medals.equals("noMedals"))
+			{
+				for(int i = 0; i < medalList.length; i++)
+				{
+					parsedMedal = medalList[i].split(";");
+					if(parsedMedal[0].equals(medalName))
+					{
+						amountOfNewMedal = Integer.parseInt(parsedMedal[1]) + 1;
+					}
+					else
+					{
+						newMedalList += medalList[i] + "_";
+					}
+				}
+			}
+			if(amountOfNewMedal != 0)
+			{
+				newlyAddedMedal = medalName + ";" + amountOfNewMedal + "_";
+			}
+			else
+			{
+				newlyAddedMedal = medalName + ";1_";
+			}
+			
+			newMedalList += newlyAddedMedal;
+			WriteToDatabase(userRow, 11, newMedalList);
+			return "Added Medal to " + username;
+		}
+		else
+		{
+			return "User does not exist";
+		}
+	}
+	public void RemoveMedals()
+	{
+		
+	}
+	
+	public String GetMedalsReverseOrder(String username) throws Exception
+	{	
+		//returns the medals in the reverse order, to show the newest added one first!
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		String medals = "";
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			if(sheet.getRow(userRow).getCell(11) != null)
+			{
+				String oldMedals = sheet.getRow(userRow).getCell(11).getStringCellValue();
+				String [] medalList = oldMedals.split("_");
+				for(int i = medalList.length-1; i >= 0; i--)
+				{
+					medals += medalList[i] + "_";
+				}
+			}
+			else
+			{
+				medals = "";
+			}
+		}
+		else
+		{
+			return "User not found";
+		}
+		return medals;
+	}
+	
+	public String GetMedalsCorrectOrder(String username) throws Exception
+	{	
+		//returns the medals in the reverse order, to show the newest added one first!
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		String Medals = "";
+		int userRow = FindRowOfUser(username);
+		if(userRow != -1)
+		{
+			if(sheet.getRow(userRow).getCell(11) != null)
+			{
+				Medals = sheet.getRow(userRow).getCell(11).getStringCellValue();
+			}
+			else
+			{
+				Medals = "noMedals";
+			}
+		}
+		else
+		{
+			return "User not found";
+		}
+		return Medals;
 	}
 }
 	

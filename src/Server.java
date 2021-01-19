@@ -18,10 +18,11 @@ public class Server {
         //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
         //InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("activity_run_stop_Mezix");
-        InputProcessor.ProcessString("activity_Run_getpeopleinarea_Enric_5000");
+        //InputProcessor.ProcessString("activity_run_getpeopleinarea_Enric_5000");
         //InputProcessor.ProcessString("activity_run_join_Phine_Enric");
         //InputProcessor.ProcessString("activity_run_leave_Phine_Enric");
-        
+        //InputProcessor.ProcessString("medal_add_10streak_Mezix");
+        InputProcessor.ProcessString("medal_get_Mezix");
         try
         {
             serverSocket = new ServerSocket(port);

@@ -73,6 +73,27 @@ public class ProcessUserInput {
 				returnedString = GetPeopleInArea(SplitString[3], SplitString[4]);
 			}
 		}
+		else if(SplitString[0].equals("medal")) 
+		{
+			SplitString[1] = SplitString[1].toLowerCase();
+			if(SplitString[1].equals("add"))
+			{
+				SplitString[2] = SplitString[2].toLowerCase();
+				returnedString = AddMedalToUser(SplitString[2], SplitString[3]);
+			}
+			else if(SplitString[1].equals("remove"))
+			{
+				
+			}
+			else if(SplitString[1].equals("get"))
+			{
+				returnedString = GetMedalsOfUser(SplitString[2]);
+			}
+		}
+		else
+		{
+			returnedString = "Not a valid command!";
+		}
 		
 		System.out.println("Received String : " + receivedString);
 		System.out.println("Returned String : " + returnedString);
@@ -162,7 +183,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.StartRun(date, user, location);
+			return excelTable.StartActivity(date, user, location);
 		}	
 		catch (Exception e)
 		{
@@ -174,7 +195,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.StopRun(user);
+			return excelTable.StopActivityOfUser(user);
 		}	
 		catch (Exception e)
 		{
@@ -191,7 +212,7 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Stopping Activity caused Exception";
+			return "Joining Activity caused Exception";
 		}
 	}
 	public String LeaveActivity(String userLeaving, String userBeingLeft)
@@ -203,7 +224,7 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Stopping Run caused Exception";
+			return "Leaving Activity caused Exception";
 		}
 	}
 	public String GetPeopleInArea(String Username, String distance)
@@ -215,7 +236,55 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Stopping Run caused Exception";
+			return "Getting people in area caused exception";
 		}
 	}
+	
+	//MEDALS
+	
+	public String AddMedalToUser(String medalname, String username)
+	{
+		try
+		{
+			return excelTable.AddMedalToUser(medalname, username);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Adding Medal caused Exception";
+		}
+	}
+	
+	public String GetMedalsOfUser(String username)
+	{
+		try
+		{
+			return excelTable.GetMedalsReverseOrder(username);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Getting Medal caused Exception";
+		}
+	}
+	//CHAT
+	
+	
+	public void GetChatLog(String Person1, String Person2)
+	{
+		//Person 1 sent the messages to person2
+		//return all messages with A very long decoder between each message
+		//, so we dont accidentally trigger it and save two messages in one
+		//like:  <&%msg%&>
+	}
+	
+	public void GetAllActiveChats(String person)
+	{
+		//search person in cell 1 and cell 2 of each row!
+		//return List of People to display, using the other cell we didnt find our person in
+	}
+	//Add a new excel spreadsheet for Chat messages!!
+	
+	//Name1|Name2|(MessageList): Message1|Message2|...|MessageN
+	//or alternatively add a new cell for each message!
 }
