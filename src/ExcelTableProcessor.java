@@ -153,7 +153,6 @@ public class ExcelTableProcessor
 		{
 			floatString = LatLng.substring(10, LatLng.length()-1);
 		}
-		
 		catch (IndexOutOfBoundsException e)
 		{
 			floatLatLng[0] = -1000f;
@@ -408,6 +407,24 @@ public class ExcelTableProcessor
 		}
 	}
 	
+	public String updateLocation(String user, String location) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int userRow = FindRowOfUser(user);
+		if(userRow != -1)
+		{
+			WriteToDatabase(userRow, 7, location);
+			return "Location updated!";
+		}
+		else
+		{
+			return "User not found";
+		}
+	}
+	
 	//LAUFEN
 	
 	public String StartActivity(String time, String username, String location) throws Exception
@@ -440,8 +457,6 @@ public class ExcelTableProcessor
 		if(row != -1)
 		{
 			WriteToDatabase(row, 6, "false");  //stops this activity from being found by ReturnAllRowsOfPeopleWithActivities()
-			WriteToDatabase(row, 7, ""); //activity position
-			WriteToDatabase(row, 8, ""); //activity start time
 			WriteToDatabase(row, 9, ""); //deletes the activity list and everyone in it
 			return "Activity Stopped!";
 		}

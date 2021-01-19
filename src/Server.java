@@ -25,6 +25,7 @@ public class Server {
         //InputProcessor.ProcessString("medal_get_Mezix");
         //InputProcessor.ProcessString("avatar_get_Mezix");
         //InputProcessor.ProcessString("avatar_set_Mezix_avatar2");
+       // InputProcessor.ProcessString("friend_updatelocation_Mezix_lat/lng: (53.6175727,9.8987057)");
         
         try
         {

@@ -46,6 +46,10 @@ public class ProcessUserInput {
 			{
 				serverMessage = RemoveFriend(SplitString[2], SplitString[3]);
 			}
+			else if(SplitString[1].equals("updatelocation"))
+			{
+				serverMessage = updateLocation(SplitString[2], SplitString[3]);
+			}
 		}
 		else if(SplitString[0].equals("activity"))
 		{
@@ -188,7 +192,18 @@ public class ProcessUserInput {
 			return "Removing Friend caused Exception";
 		}
 	}
-
+	public String updateLocation(String person1, String location)
+	{
+		try
+		{
+			return excelTable.updateLocation(person1, location);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Removing Friend caused Exception";
+		}
+	}
 	//RUN
 	
 	public String StartActivity(String date, String user, String location)
