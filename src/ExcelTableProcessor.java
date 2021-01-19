@@ -191,7 +191,10 @@ public class ExcelTableProcessor
 		}
 		else
 		{
-			System.out.println("User does not have viable coordinates!");
+			System.out.println("User does not have viable coordinates. Coordinates were; User1: " 
+								+ LatOfUser1 + ", " + LngOfUser1 + " User2: "
+								+ LatOfUser2 + ", " + LngOfUser2
+								);
 			return -1f;
 		}
 	}
@@ -223,7 +226,7 @@ public class ExcelTableProcessor
 						if(sheet.getRow(i).getCell(1).getStringCellValue().equals(passwort))
 						{
 							loginOutputMessage += "success";
-							//WriteToDatabase(FindRowOfPerson(username), 6, "false"); //ActivityStatus
+							//WriteToDatabase(FindRowOfPerson(username), 6, "false"); //stop users activity
 							break;
 						}
 						else
@@ -416,7 +419,7 @@ public class ExcelTableProcessor
 		int row = FindRowOfUser(username);
 		if(row != -1)
 		{
-			UserLeaveAllActivities(username);
+			userLeaveAllActivities(username);
 			WriteToDatabase(row, 6, "true");
 			WriteToDatabase(row, 7, location);
 			WriteToDatabase(row, 8, time);
@@ -462,7 +465,7 @@ public class ExcelTableProcessor
 			{
 				if(!PersonExistsInActivityList(userJoining, userBeingJoined))
 				{	
-					UserLeaveAllActivities(userJoining); //remove us from all other activities
+					userLeaveAllActivities(userJoining); //remove us from all other activities
 				
 					String newActivityList = "";
 					if(sheet.getRow(userBeingJoinedRow).getCell(9) != null)
@@ -534,7 +537,7 @@ public class ExcelTableProcessor
 		}
 	}
 	
-	public void UserLeaveAllActivities(String username) throws Exception
+	public void userLeaveAllActivities(String username) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -564,7 +567,7 @@ public class ExcelTableProcessor
 			//System.out.println("User does not exist");
 		}
 	}
-	public String ReturnPeopleWithActivitiesInArea(String user, float maxDistance) throws Exception
+	public String getPeopleWithActivitiesInArea(String user, float maxDistance) throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -602,6 +605,10 @@ public class ExcelTableProcessor
 						+ "_";
 					}
 				}
+			}
+			if(peopleInArea.equals(""))
+			{
+				return "No People In Area!";
 			}
 			return peopleInArea;
 		}

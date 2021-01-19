@@ -243,7 +243,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.ReturnPeopleWithActivitiesInArea(Username, Float.parseFloat(distance));
+			return excelTable.getPeopleWithActivitiesInArea(Username, Float.parseFloat(distance));
 		}	
 		catch (Exception e)
 		{
