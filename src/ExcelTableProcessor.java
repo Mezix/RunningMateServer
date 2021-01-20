@@ -198,9 +198,9 @@ public class ExcelTableProcessor
 		}
 	}
 	
-	//Methods called by ProcessUserInput
+	//Methods called by ProcessUserInputDirectly
 	
-	public String Login(String username, String passwort) throws Exception
+	public String login(String username, String passwort) throws Exception
 	{
 		System.out.println("Attempting Login of User_ "+ username);
 		
@@ -244,8 +244,7 @@ public class ExcelTableProcessor
 		
 		return loginOutputMessage;
 	}
-	
-	public String RegisterPerson(String username, String passwort, String firstName, String lastName, String age) throws Exception
+	public String registerPerson(String username, String passwort, String firstName, String lastName, String age) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -274,10 +273,34 @@ public class ExcelTableProcessor
 		
 		return "registration_success";
 	}
+	public String getAllUsers(String userNotToInclude) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int numberOfRows = 1 + sheet.getLastRowNum();
+		String listOfUsers = "";
+		
+		for(int i = 1; i < numberOfRows; i++)
+		{
+			if(sheet.getRow(i) != null)
+			{
+				if(sheet.getRow(i).getCell(0) != null)
+				{
+					if(!sheet.getRow(i).getCell(0).getStringCellValue().equals(userNotToInclude))
+					{
+						listOfUsers += sheet.getRow(i).getCell(0).getStringCellValue() + ";";
+					}
+				}
+			}
+		}
+		return listOfUsers;
+	}
 	
 	//FREUNDE
 	
-	public String AddFriend(String person1, String person2) throws Exception
+	public String addFriend(String person1, String person2) throws Exception
 	{
 		//adds person1 to person2's friendlist!!
 		
@@ -322,10 +345,9 @@ public class ExcelTableProcessor
 		}
 		return "Friend_Add_" + person1 + "_" + person2 + "_Success";
 	}
-	
-	public String RemoveFriend(String person1, String person2) throws Exception
+	public String removeFriend(String person1, String person2) throws Exception
 	{
-		String friendslist = GetFriendList(person2);
+		String friendslist = getFriendList(person2);
 		if(friendslist.equals(""))
 		{
 			return "friends list empty";
@@ -358,7 +380,7 @@ public class ExcelTableProcessor
 		}
 		
 	}
-	public String GetFriendList(String username) throws Exception
+	public String getFriendList(String username) throws Exception
 	{
 		int rowOfUser = FindRowOfUser(username);
 		if(rowOfUser != -1)
@@ -377,7 +399,7 @@ public class ExcelTableProcessor
 			return username + " does not exist!";
 		}
 	}
-	public String GetFriendAllInfo(String user) throws Exception
+	public String getFriendAllInfo(String user) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -406,7 +428,6 @@ public class ExcelTableProcessor
 			return "Person not found!";		
 		}
 	}
-	
 	public String updateLocation(String user, String location) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
@@ -424,7 +445,27 @@ public class ExcelTableProcessor
 			return "User not found";
 		}
 	}
-	
+	public String getInfoOfUserForFriendsList(String user) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		int rowOfUser = FindRowOfUser(user);
+		String returnString = "";
+		if(rowOfUser != -1)
+		{
+			if(sheet.getRow(rowOfUser).getCell(0) != null)
+			{
+				
+			}
+			return "";
+		}
+		else
+		{
+			return "User not found!";
+		}
+	}
 	//LAUFEN
 	
 	public String StartActivity(String time, String username, String location) throws Exception

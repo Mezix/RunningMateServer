@@ -23,19 +23,27 @@ public class ProcessUserInput {
 		{
 			serverMessage = RegisterUser(SplitString);
 		}
+		else if(SplitString[0].equals("getallusernames"))
+		{
+			serverMessage = getAllUserNames(SplitString[1]);
+		}
 		else if(SplitString[0].equals("friend"))
 		{
 			SplitString[1] = SplitString[1].toLowerCase();
 			
 			if(SplitString[1].equals("get"))
 			{
-				if(SplitString[2].equals("list"))
+				if(SplitString[2].equals("friendlist"))
 				{
 					serverMessage = GetFriendsList(SplitString[3]);
 				}
 				if(SplitString[2].equals("allInfo"))
 				{
 					serverMessage = GetFriendAllInfo(SplitString[3]);
+				}
+				if(SplitString[2].equals("infoForFriendlist"))
+				{
+					serverMessage = "";
 				}
 			}
 			else if(SplitString[1].equals("add"))
@@ -122,7 +130,7 @@ public class ProcessUserInput {
 	
 		try 
 		{
-			return excelTable.Login(s[1], s[2]);
+			return excelTable.login(s[1], s[2]);
 		} 
 		catch (Exception e) 
 		{
@@ -134,11 +142,24 @@ public class ProcessUserInput {
 	{
 		try 
 		{
-			return excelTable.RegisterPerson(s[1], s[2], s[3], s[4], s[5]);
+			return excelTable.registerPerson(s[1], s[2], s[3], s[4], s[5]);
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 			return "Registering Person caused Exception";
+		}
+	}
+	
+	public String getAllUserNames(String userNotToInclude)
+	{
+		try
+		{
+			return excelTable.getAllUsers(userNotToInclude);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Leaving Activity caused Exception";
 		}
 	}
 	
@@ -148,7 +169,7 @@ public class ProcessUserInput {
 	{
 		try 
 		{
-			return excelTable.GetFriendList(username);
+			return excelTable.getFriendList(username);
 		}
 		catch (Exception e)
 		{
@@ -160,7 +181,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.GetFriendAllInfo(username);
+			return excelTable.getFriendAllInfo(username);
 		}	
 		catch (Exception e)
 		{
@@ -172,7 +193,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.AddFriend(person1, person2);
+			return excelTable.addFriend(person1, person2);
 		}
 		catch (Exception e)
 		{
@@ -184,7 +205,7 @@ public class ProcessUserInput {
 	{
 		try
 		{
-			return excelTable.RemoveFriend(person1, person2);
+			return excelTable.removeFriend(person1, person2);
 		}
 		catch (Exception e)
 		{
@@ -340,6 +361,7 @@ public class ProcessUserInput {
 	}
 	//Add a new excel spreadsheet for Chat messages!!
 	
-	//Name1|Name2|(MessageList): Message1|Message2|...|MessageN
-	//or alternatively add a new cell for each message!
+	//Name1|Name2|sender;Message1|sender;Message2|...|sender;MessageN
+	//			a new cell for each message! always add the sender to the message as well with a code so we can split it later
+	//			see GetChatLogs string splitter for inspiration
 }

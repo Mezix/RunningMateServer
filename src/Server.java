@@ -14,7 +14,7 @@ public class Server {
         //InputProcessor.ProcessString("register_Hande2_password_Hande_Eyicalis_21");
         //InputProcessor.ProcessString("friend_add_Mezix2_Mezix");
         //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
-        //InputProcessor.ProcessString("friend_get_list_Mezix");
+        //InputProcessor.ProcessString("friend_get_friendlist_Mezix");
         //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
         //InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("activity_run_stop_Mezix");
@@ -25,7 +25,8 @@ public class Server {
         //InputProcessor.ProcessString("medal_get_Mezix");
         //InputProcessor.ProcessString("avatar_get_Mezix");
         //InputProcessor.ProcessString("avatar_set_Mezix_avatar2");
-       // InputProcessor.ProcessString("friend_updatelocation_Mezix_lat/lng: (53.6175727,9.8987057)");
+        // InputProcessor.ProcessString("friend_updatelocation_Mezix_lat/lng: (53.6175727,9.8987057)");
+        //InputProcessor.ProcessString("getallusernames_Mezix");
         
         try
         {
