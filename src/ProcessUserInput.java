@@ -43,7 +43,7 @@ public class ProcessUserInput {
 				}
 				if(SplitString[2].equals("infoForFriendlist"))
 				{
-					serverMessage = "";
+					serverMessage = getInfoOfUserForFriendsList(SplitString[3]);
 				}
 			}
 			else if(SplitString[1].equals("add"))
@@ -222,7 +222,19 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Removing Friend caused Exception";
+			return "Updating Location caused Exception";
+		}
+	}
+	public String getInfoOfUserForFriendsList(String user)
+	{
+		try
+		{
+			return excelTable.getInfoOfUserForFriendsList(user);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Getting info for friendslist caused Exception";
 		}
 	}
 	//RUN

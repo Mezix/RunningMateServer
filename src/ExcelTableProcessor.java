@@ -455,11 +455,19 @@ public class ExcelTableProcessor
 		String returnString = "";
 		if(rowOfUser != -1)
 		{
-			if(sheet.getRow(rowOfUser).getCell(0) != null)
+			if(sheet.getRow(rowOfUser).getCell(0) != null
+			&& sheet.getRow(rowOfUser).getCell(10) != null
+			&& sheet.getRow(rowOfUser).getCell(13) != null)
 			{
-				
+				returnString = sheet.getRow(rowOfUser).getCell(0).getStringCellValue() + ";"
+							 + sheet.getRow(rowOfUser).getCell(10).getStringCellValue() + ";"
+							 + sheet.getRow(rowOfUser).getCell(13).getStringCellValue() + ";";
+				return returnString;
 			}
-			return "";
+			else
+			{
+				return "Cant get users info!";
+			}
 		}
 		else
 		{
