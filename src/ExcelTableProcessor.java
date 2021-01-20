@@ -1,12 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
 import java.util.*; 
-import java.math.*;
 
 public class ExcelTableProcessor 
 {
@@ -476,7 +472,7 @@ public class ExcelTableProcessor
 	}
 	//LAUFEN
 	
-	public String StartActivity(String time, String username, String location) throws Exception
+	public String startActivity(String time, String username, String location) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -496,7 +492,7 @@ public class ExcelTableProcessor
 			return "Person does not exist";
 		}
 	}
-	public String StopActivityOfUser(String user) throws Exception
+	public String stopActivityOfUser(String user) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -514,7 +510,7 @@ public class ExcelTableProcessor
 			return "Person does not exist";
 		}
 	}
-	public String JoinActivity(String userJoining, String userBeingJoined) throws Exception
+	public String joinActivity(String userJoining, String userBeingJoined) throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -539,7 +535,7 @@ public class ExcelTableProcessor
 					newActivityList += userJoining + ";";
 					WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
 					
-					StopActivityOfUser(userJoining); //now leave our own run if we have one!
+					stopActivityOfUser(userJoining); //now leave our own run if we have one!
 					return "User joining suceeded!";
 				}
 				else
@@ -558,7 +554,7 @@ public class ExcelTableProcessor
 		}
 		
 	}
-	public String LeaveActivity(String userLeaving, String userBeingLeft) throws Exception
+	public String leaveActivity(String userLeaving, String userBeingLeft) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -616,7 +612,7 @@ public class ExcelTableProcessor
 			{
 				if(PersonExistsInActivityList(username, sheet.getRow(i).getCell(0).getStringCellValue()))
 				{
-					LeaveActivity(username, sheet.getRow(i).getCell(0).getStringCellValue());
+					leaveActivity(username, sheet.getRow(i).getCell(0).getStringCellValue());
 					debugString += " " + sheet.getRow(i).getCell(0).getStringCellValue();
 				}
 			}
@@ -681,7 +677,7 @@ public class ExcelTableProcessor
 
 	//MEDAILLEN
 	
-	public String AddMedalToUser(String medalName, String username) throws Exception
+	public String addMedalToUser(String medalName, String username) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -736,7 +732,7 @@ public class ExcelTableProcessor
 	{
 		
 	}
-	public String GetMedalsReverseOrder(String username) throws Exception
+	public String getMedalsReverseOrder(String username) throws Exception
 	{	
 		//returns the medals in the reverse order, to show the newest added one first!
 		fileInput=new FileInputStream("./data.xlsx");
@@ -796,7 +792,7 @@ public class ExcelTableProcessor
 
 	//AVATAR
 	
-	public String SetAvatar(String username, String avatarReference) throws Exception
+	public String setAvatar(String username, String avatarReference) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -813,7 +809,7 @@ public class ExcelTableProcessor
 			return "User does not exist";
 		}
 	}
-	public String GetAvatar(String username) throws Exception
+	public String getAvatar(String username) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);

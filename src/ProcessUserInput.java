@@ -17,11 +17,11 @@ public class ProcessUserInput {
 		
 		if(SplitString[0].equals("login"))
 		{
-			serverMessage = Login(SplitString);
+			serverMessage = login(SplitString);
 		}
 		else if(SplitString[0].equals("register"))
 		{
-			serverMessage = RegisterUser(SplitString);
+			serverMessage = registerUser(SplitString);
 		}
 		else if(SplitString[0].equals("getallusernames"))
 		{
@@ -35,11 +35,11 @@ public class ProcessUserInput {
 			{
 				if(SplitString[2].equals("friendlist"))
 				{
-					serverMessage = GetFriendsList(SplitString[3]);
+					serverMessage = getFriendsList(SplitString[3]);
 				}
 				if(SplitString[2].equals("allInfo"))
 				{
-					serverMessage = GetFriendAllInfo(SplitString[3]);
+					serverMessage = getFriendAllInfo(SplitString[3]);
 				}
 				if(SplitString[2].equals("infoForFriendlist"))
 				{
@@ -48,11 +48,11 @@ public class ProcessUserInput {
 			}
 			else if(SplitString[1].equals("add"))
 			{
-				serverMessage = AddFriend(SplitString[2], SplitString[3]);
+				serverMessage = addFriend(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("remove"))
 			{
-				serverMessage = RemoveFriend(SplitString[2], SplitString[3]);
+				serverMessage = removeFriend(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("updatelocation"))
 			{
@@ -66,23 +66,23 @@ public class ProcessUserInput {
 			
 			if(SplitString[2].equals("start"))
 			{
-				serverMessage = StartActivity(SplitString[3], SplitString[4], SplitString[5]);	
+				serverMessage = startActivity(SplitString[3], SplitString[4], SplitString[5]);	
 			}
 			else if(SplitString[2].equals("stop"))
 			{
-				serverMessage = StopActivity(SplitString[3]);	
+				serverMessage = stopActivity(SplitString[3]);	
 			}
 			else if(SplitString[2].equals("join")) 
 			{
-				serverMessage = JoinActivity(SplitString[3], SplitString[4]);
+				serverMessage = joinActivity(SplitString[3], SplitString[4]);
 			}
 			else if(SplitString[2].equals("leave")) 
 			{
-				serverMessage = LeaveActivity(SplitString[3], SplitString[4]);
+				serverMessage = leaveActivity(SplitString[3], SplitString[4]);
 			}
 			else if(SplitString[2].equals("getpeopleinarea")) 
 			{
-				serverMessage = GetPeopleInArea(SplitString[3], SplitString[4]);
+				serverMessage = getPeopleInArea(SplitString[3], SplitString[4]);
 			}
 		}
 		else if(SplitString[0].equals("medal")) 
@@ -91,7 +91,7 @@ public class ProcessUserInput {
 			if(SplitString[1].equals("add"))
 			{
 				SplitString[2] = SplitString[2].toLowerCase();
-				serverMessage = AddMedalToUser(SplitString[2], SplitString[3]);
+				serverMessage = addMedalToUser(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("remove"))
 			{
@@ -99,7 +99,7 @@ public class ProcessUserInput {
 			}
 			else if(SplitString[1].equals("get"))
 			{
-				serverMessage = GetMedalsOfUser(SplitString[2]);
+				serverMessage = getMedalsOfUser(SplitString[2]);
 			}
 		}
 		else if(SplitString[0].equals("avatar")) 
@@ -107,11 +107,11 @@ public class ProcessUserInput {
 			SplitString[1] = SplitString[1].toLowerCase();
 			if(SplitString[1].equals("set"))
 			{
-				serverMessage = SetAvatar(SplitString[2], SplitString[3]);
+				serverMessage = setAvatar(SplitString[2], SplitString[3]);
 			}
 			else if(SplitString[1].equals("get"))
 			{
-				serverMessage = GetAvatar(SplitString[2]);
+				serverMessage = getAvatar(SplitString[2]);
 			}
 		}
 		else
@@ -125,7 +125,7 @@ public class ProcessUserInput {
 		return serverMessage;
 	}
 	
-	public String Login(String[] s)
+	public String login(String[] s)
 	{
 	
 		try 
@@ -138,7 +138,7 @@ public class ProcessUserInput {
 			return "Login caused Exception";
 		}
 	}
-	public String RegisterUser(String[] s)
+	public String registerUser(String[] s)
 	{
 		try 
 		{
@@ -165,7 +165,7 @@ public class ProcessUserInput {
 	
 	//FRIEND
 	
-	public String GetFriendsList(String username)
+	public String getFriendsList(String username)
 	{
 		try 
 		{
@@ -177,7 +177,7 @@ public class ProcessUserInput {
 			return "Adding Friend caused Exception";
 		}
 	}
-	public String GetFriendAllInfo(String username)
+	public String getFriendAllInfo(String username)
 	{
 		try
 		{
@@ -189,7 +189,7 @@ public class ProcessUserInput {
 			return "Stopping Run caused Exception";
 		}
 	}
-	public String AddFriend(String person1, String person2) //Adds person1, to person 2's friendlist
+	public String addFriend(String person1, String person2) //Adds person1, to person 2's friendlist
 	{
 		try
 		{
@@ -201,7 +201,7 @@ public class ProcessUserInput {
 			return "Adding Friend caused Exception";
 		}
 	}
-	public String RemoveFriend(String person1, String person2)
+	public String removeFriend(String person1, String person2)
 	{
 		try
 		{
@@ -239,11 +239,11 @@ public class ProcessUserInput {
 	}
 	//RUN
 	
-	public String StartActivity(String date, String user, String location)
+	public String startActivity(String date, String user, String location)
 	{
 		try
 		{
-			return excelTable.StartActivity(date, user, location);
+			return excelTable.startActivity(date, user, location);
 		}	
 		catch (Exception e)
 		{
@@ -251,11 +251,11 @@ public class ProcessUserInput {
 			return "Starting Activity caused Exception";
 		}
 	}
-	public String StopActivity(String user)
+	public String stopActivity(String user)
 	{
 		try
 		{
-			return excelTable.StopActivityOfUser(user);
+			return excelTable.stopActivityOfUser(user);
 		}	
 		catch (Exception e)
 		{
@@ -263,11 +263,11 @@ public class ProcessUserInput {
 			return "Stopping Activity caused Exception";
 		}
 	}
-	public String JoinActivity(String userJoining, String userBeingJoined)
+	public String joinActivity(String userJoining, String userBeingJoined)
 		{
 		try
 		{
-			return excelTable.JoinActivity(userJoining, userBeingJoined);
+			return excelTable.joinActivity(userJoining, userBeingJoined);
 		}	
 		catch (Exception e)
 		{
@@ -275,11 +275,11 @@ public class ProcessUserInput {
 			return "Joining Activity caused Exception";
 		}
 	}
-	public String LeaveActivity(String userLeaving, String userBeingLeft)
+	public String leaveActivity(String userLeaving, String userBeingLeft)
 	{
 		try
 		{
-			return excelTable.LeaveActivity(userLeaving, userBeingLeft);
+			return excelTable.leaveActivity(userLeaving, userBeingLeft);
 		}	
 		catch (Exception e)
 		{
@@ -287,7 +287,7 @@ public class ProcessUserInput {
 			return "Leaving Activity caused Exception";
 		}
 	}
-	public String GetPeopleInArea(String Username, String distance)
+	public String getPeopleInArea(String Username, String distance)
 	{
 		try
 		{
@@ -302,11 +302,11 @@ public class ProcessUserInput {
 	
 	//MEDALS
 	
-	public String AddMedalToUser(String medalname, String username)
+	public String addMedalToUser(String medalname, String username)
 	{
 		try
 		{
-			return excelTable.AddMedalToUser(medalname, username);
+			return excelTable.addMedalToUser(medalname, username);
 		}	
 		catch (Exception e)
 		{
@@ -315,11 +315,11 @@ public class ProcessUserInput {
 		}
 	}
 	
-	public String GetMedalsOfUser(String username)
+	public String getMedalsOfUser(String username)
 	{
 		try
 		{
-			return excelTable.GetMedalsReverseOrder(username);
+			return excelTable.getMedalsReverseOrder(username);
 		}	
 		catch (Exception e)
 		{
@@ -330,11 +330,11 @@ public class ProcessUserInput {
 	
 	//AVATAR 
 	
-	public String GetAvatar(String username)
+	public String getAvatar(String username)
 	{
 		try
 		{
-			return excelTable.GetAvatar(username);
+			return excelTable.getAvatar(username);
 		}	
 		catch (Exception e)
 		{
@@ -342,11 +342,11 @@ public class ProcessUserInput {
 			return "Getting Avatar caused Exception";
 		}
 	}
-	public String SetAvatar(String username, String avatarRef)
+	public String setAvatar(String username, String avatarRef)
 	{
 		try
 		{
-			return excelTable.SetAvatar(username, avatarRef);
+			return excelTable.setAvatar(username, avatarRef);
 		}	
 		catch (Exception e)
 		{
