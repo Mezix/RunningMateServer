@@ -15,7 +15,7 @@ public class ExcelTableProcessor
 	
 	//Helper Methods
 	
-	private void WriteToDatabase(int row, int cell, String text) throws Exception
+	private void writeToDatabase(int row, int cell, String text) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -36,7 +36,7 @@ public class ExcelTableProcessor
 		fileOuput.close();
 	}
 	
-	private int FindRowOfUser(String username) throws Exception
+	private int findRowOfUser(String username) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -59,13 +59,13 @@ public class ExcelTableProcessor
 		return -1;
 	}
 	
-	private boolean PersonExistsInFriendsList(String username, String otherUser) throws Exception
+	private boolean personExistsInFriendsList(String username, String otherUser) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfUser(otherUser);
+		int row = findRowOfUser(otherUser);
 		if(row != -1)
 		{
 			if(sheet.getRow(row).getCell(5) != null)
@@ -75,7 +75,7 @@ public class ExcelTableProcessor
 				{
 					if(FriendsList[i].equals(username))
 					{
-						System.out.println(username + " is already in " + otherUser + "'s Friendslist!");
+						//System.out.println(username + " is already in " + otherUser + "'s Friendslist!");
 						return true;
 					}
 				}
@@ -84,13 +84,13 @@ public class ExcelTableProcessor
 		return false;
 	}
 	
-	private boolean PersonExistsInActivityList(String userJoining, String userBeingJoined) throws Exception
+	private boolean personExistsInActivityList(String userJoining, String userBeingJoined) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfUser(userBeingJoined);
+		int row = findRowOfUser(userBeingJoined);
 		if(row != -1)
 		{
 			if(sheet.getRow(row).getCell(9) != null)
@@ -109,12 +109,12 @@ public class ExcelTableProcessor
 		return false;
 	}
 	
-	private void InitialiseStopper(int row) throws Exception
+	private void initialiseStopper(int row) throws Exception
 	{
-		WriteToDatabase(row, 50, "END");
+		writeToDatabase(row, 50, "END");
 	}
 	
-	private List<Integer> ReturnAllRowsWithActivities() throws Exception
+	private List<Integer> returnAllRowsWithActivities() throws Exception
 	{	
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -141,7 +141,7 @@ public class ExcelTableProcessor
 		return RowsOfPeople;
 	}
 	
-	private float[] ParseLatLng(String LatLng)
+	private float[] parseLatLng(String LatLng)
 	{
 		float[] floatLatLng = new float[2];
 		String floatString = "";
@@ -161,13 +161,13 @@ public class ExcelTableProcessor
 		return floatLatLng;
 	}
 	
-	private float GetDistanceBetweenTwoUsersLatLng(String user1coords, String user2coords)
+	private float getDistanceBetweenTwoUsersLatLng(String user1coords, String user2coords)
 	{
-		float[] parsedFloats = ParseLatLng(user1coords);
+		float[] parsedFloats = parseLatLng(user1coords);
 		float LatOfUser1 = parsedFloats[0];
 		float LngOfUser1 = parsedFloats[1];
 		
-		parsedFloats = ParseLatLng(user2coords);
+		parsedFloats = parseLatLng(user2coords);
 		float LatOfUser2 = parsedFloats[0];
 		float LngOfUser2 = parsedFloats[1];
 		
@@ -250,22 +250,22 @@ public class ExcelTableProcessor
 		int numberOfRows = 1 + sheet.getLastRowNum();
 
 		System.out.println(numberOfRows);
-		int RowOfExistingUsername = FindRowOfUser(username);
+		int RowOfExistingUsername = findRowOfUser(username);
 		if(RowOfExistingUsername != -1)
 		{
 			return "registration_failed_username";
 		}
 		
-		WriteToDatabase(numberOfRows, 0, username);
-		WriteToDatabase(numberOfRows, 1, passwort);
-		WriteToDatabase(numberOfRows, 2, firstName);
-		WriteToDatabase(numberOfRows, 3, lastName);
-		WriteToDatabase(numberOfRows, 4, age);
-		WriteToDatabase(numberOfRows, 6, "false"); //ActivityStatus
-		WriteToDatabase(numberOfRows, 10, "R.mipmap.avatar1"); //Avatar
-		WriteToDatabase(numberOfRows, 13, "0"); //FitnessLevel
+		writeToDatabase(numberOfRows, 0, username);
+		writeToDatabase(numberOfRows, 1, passwort);
+		writeToDatabase(numberOfRows, 2, firstName);
+		writeToDatabase(numberOfRows, 3, lastName);
+		writeToDatabase(numberOfRows, 4, age);
+		writeToDatabase(numberOfRows, 6, "false"); //ActivityStatus
+		writeToDatabase(numberOfRows, 10, "R.mipmap.avatar1"); //Avatar
+		writeToDatabase(numberOfRows, 13, "0"); //FitnessLevel
 		
-		InitialiseStopper(numberOfRows);
+		initialiseStopper(numberOfRows);
 		
 		return "registration_success";
 	}
@@ -311,10 +311,13 @@ public class ExcelTableProcessor
 			{
 				if(!sheet.getRow(i).getCell(0).getStringCellValue().equals(userNotToInclude))
 				{
-					listOfUsers += sheet.getRow(i).getCell(0).getStringCellValue() + ";"
-								+  sheet.getRow(i).getCell(0).getStringCellValue() + ";"
-								+ sheet.getRow(i).getCell(0).getStringCellValue() + ";"
-								+ "_";
+					if(!personExistsInFriendsList(sheet.getRow(i).getCell(0).getStringCellValue(), userNotToInclude))
+					{
+						listOfUsers += sheet.getRow(i).getCell(0).getStringCellValue() + ";"
+							+  sheet.getRow(i).getCell(10).getStringCellValue() + ";"
+							+ sheet.getRow(i).getCell(13).getStringCellValue() + ";"
+							+ "_";
+					}
 				}
 			}
 		}
@@ -338,19 +341,19 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int person1row  = FindRowOfUser(person1);
-		int person2row = FindRowOfUser(person2);
+		int person1row  = findRowOfUser(person1);
+		int person2row = findRowOfUser(person2);
 		
 		if(person1row != -1 && person2row != -1)
 		{	
-			if(!PersonExistsInFriendsList(person1, person2))
+			if(!personExistsInFriendsList(person1, person2))
 			{
 				String FriendsList = "";
 				if(sheet.getRow(person2row).getCell(5) != null)
 				{
 					FriendsList = sheet.getRow(person2row).getCell(5).getStringCellValue();
 				}
-				WriteToDatabase(person2row, 5, FriendsList + person1 + ";");
+				writeToDatabase(person2row, 5, FriendsList + person1 + ";");
 			}
 			else
 			{
@@ -378,7 +381,7 @@ public class ExcelTableProcessor
 			return "friends list empty";
 		}
 		String[] splitString = friendslist.split(";");
-		if(PersonExistsInFriendsList(person1, person2))
+		if(personExistsInFriendsList(person1, person2))
 		{
 			String newFriendslist = "";
 			for(int i = 0; i < splitString.length; i++)
@@ -388,10 +391,10 @@ public class ExcelTableProcessor
 					newFriendslist += splitString[i] + ";";
 				}
 			}
-			int rowOfPerson2 = FindRowOfUser(person2);
+			int rowOfPerson2 = findRowOfUser(person2);
 			if(rowOfPerson2 != -1)
 			{
-				WriteToDatabase(rowOfPerson2, 5, newFriendslist);
+				writeToDatabase(rowOfPerson2, 5, newFriendslist);
 				return "Person 1 removed from person 2's list!";
 			}
 			else
@@ -407,7 +410,7 @@ public class ExcelTableProcessor
 	}
 	public String getFriendList(String username) throws Exception
 	{
-		int rowOfUser = FindRowOfUser(username);
+		int rowOfUser = findRowOfUser(username);
 		if(rowOfUser != -1)
 		{
 			if(sheet.getRow(rowOfUser).getCell(5) != null)
@@ -430,7 +433,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 	
-		int row = FindRowOfUser(user);
+		int row = findRowOfUser(user);
 		if(row != -1)
 		{
 			String returnString = "";
@@ -459,10 +462,10 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int userRow = FindRowOfUser(user);
+		int userRow = findRowOfUser(user);
 		if(userRow != -1)
 		{
-			WriteToDatabase(userRow, 7, location);
+			writeToDatabase(userRow, 7, location);
 			return "Location updated!";
 		}
 		else
@@ -476,7 +479,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int rowOfUser = FindRowOfUser(user);
+		int rowOfUser = findRowOfUser(user);
 		String returnString = "";
 		if(rowOfUser != -1)
 		{
@@ -499,6 +502,39 @@ public class ExcelTableProcessor
 			return "User not found!";
 		}
 	}
+	public String getAllInfoOfUsersFriendlist(String user) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+		
+		
+		int rowOfUser = findRowOfUser(user);
+		String listOfFriendsInfo = "";
+		
+		if(rowOfUser != -1)
+		{
+			String userFriendlist = getFriendList(user);
+			String[] friends = userFriendlist.split(";");
+			for(String friend : friends)
+			{
+				int rowOfFriend = findRowOfUser(friend);
+				if(sheet.getRow(rowOfFriend).getCell(0) != null
+				&& sheet.getRow(rowOfFriend).getCell(10) != null
+				&& sheet.getRow(rowOfFriend).getCell(13) != null)
+				{
+				listOfFriendsInfo += sheet.getRow(rowOfFriend).getCell(0).getStringCellValue() + ";"
+							 	  + sheet.getRow(rowOfFriend).getCell(10).getStringCellValue() + ";"
+							 	  + sheet.getRow(rowOfFriend).getCell(13).getStringCellValue() + "_";
+				}
+			}
+			return listOfFriendsInfo;
+		}
+		else
+		{
+			return "User not found!";
+		}
+	}
 	//LAUFEN
 	
 	public String startActivity(String time, String username, String location, String activityType) throws Exception
@@ -507,14 +543,14 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int row = FindRowOfUser(username);
+		int row = findRowOfUser(username);
 		if(row != -1)
 		{
 			userLeaveAllActivities(username);
-			WriteToDatabase(row, 6, "true");
-			WriteToDatabase(row, 7, location);
-			WriteToDatabase(row, 8, time);
-			WriteToDatabase(row, 16, activityType);
+			writeToDatabase(row, 6, "true");
+			writeToDatabase(row, 7, location);
+			writeToDatabase(row, 8, time);
+			writeToDatabase(row, 16, activityType);
 			return "Activity Started!";
 		}
 		else
@@ -528,11 +564,11 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 	
-		int row = FindRowOfUser(user);
+		int row = findRowOfUser(user);
 		if(row != -1)
 		{
-			WriteToDatabase(row, 6, "false");  //stops this activity from being found by ReturnAllRowsOfPeopleWithActivities()
-			WriteToDatabase(row, 9, ""); //deletes the activity list and everyone in it
+			writeToDatabase(row, 6, "false");  //stops this activity from being found by ReturnAllRowsOfPeopleWithActivities()
+			writeToDatabase(row, 9, ""); //deletes the activity list and everyone in it
 			return "Activity Stopped!";
 		}
 		else
@@ -548,12 +584,12 @@ public class ExcelTableProcessor
 		
 		if(!userJoining.equals(userBeingJoined))
 		{
-			int userJoiningRow = FindRowOfUser(userJoining);
-			int userBeingJoinedRow = FindRowOfUser(userBeingJoined);
+			int userJoiningRow = findRowOfUser(userJoining);
+			int userBeingJoinedRow = findRowOfUser(userBeingJoined);
 		
 			if(userJoiningRow != -1 && userBeingJoinedRow != -1)
 			{
-				if(!PersonExistsInActivityList(userJoining, userBeingJoined))
+				if(!personExistsInActivityList(userJoining, userBeingJoined))
 				{	
 					userLeaveAllActivities(userJoining); //remove us from all other activities
 				
@@ -563,7 +599,7 @@ public class ExcelTableProcessor
 						newActivityList = sheet.getRow(userBeingJoinedRow).getCell(9).getStringCellValue();
 					}
 					newActivityList += userJoining + ";";
-					WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
+					writeToDatabase(userBeingJoinedRow, 9, newActivityList);
 					
 					stopActivityOfUser(userJoining); //now leave our own run if we have one!
 					return    sheet.getRow(userBeingJoinedRow).getCell(0).getStringCellValue() //username
@@ -599,11 +635,11 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 
-		int userLeavingRow = FindRowOfUser(userLeaving);
-		int userBeingLeftRow = FindRowOfUser(userBeingLeft);
+		int userLeavingRow = findRowOfUser(userLeaving);
+		int userBeingLeftRow = findRowOfUser(userBeingLeft);
 		if(userLeavingRow != -1 && userBeingLeftRow != -1)
 		{
-			if(PersonExistsInActivityList(userLeaving, userBeingLeft))
+			if(personExistsInActivityList(userLeaving, userBeingLeft))
 			{	
 				if(sheet.getRow(userBeingLeftRow).getCell(9) != null)
 				{
@@ -616,7 +652,7 @@ public class ExcelTableProcessor
 							newActivityList += splitString[i] + ";";
 						}
 					}
-					WriteToDatabase(userBeingLeftRow, 9, newActivityList);
+					writeToDatabase(userBeingLeftRow, 9, newActivityList);
 					return "User removed from Activity!";
 				}
 				else
@@ -642,14 +678,14 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
 			String debugString = username + " has left:";
-			List<Integer> allRowsWithActivities = ReturnAllRowsWithActivities();
+			List<Integer> allRowsWithActivities = returnAllRowsWithActivities();
 			for(int i : allRowsWithActivities)
 			{
-				if(PersonExistsInActivityList(username, sheet.getRow(i).getCell(0).getStringCellValue()))
+				if(personExistsInActivityList(username, sheet.getRow(i).getCell(0).getStringCellValue()))
 				{
 					leaveActivity(username, sheet.getRow(i).getCell(0).getStringCellValue());
 					debugString += " " + sheet.getRow(i).getCell(0).getStringCellValue();
@@ -672,7 +708,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int rowOfUser = FindRowOfUser(user);
+		int rowOfUser = findRowOfUser(user);
 		if(rowOfUser == -1)
 		{
 			return "UserNotFound!";
@@ -680,7 +716,7 @@ public class ExcelTableProcessor
 		else
 		{
 			String peopleInArea = "";
-			List<Integer> PeopleRowList = ReturnAllRowsWithActivities();
+			List<Integer> PeopleRowList = returnAllRowsWithActivities();
 			for(int i : PeopleRowList)
 			{
 				if(i == rowOfUser)
@@ -689,7 +725,7 @@ public class ExcelTableProcessor
 				}
 				if(sheet.getRow(i).getCell(7) != null)
 				{
-					float UserDistance = GetDistanceBetweenTwoUsersLatLng(sheet.getRow(rowOfUser).getCell(7).getStringCellValue(), sheet.getRow(i).getCell(7).getStringCellValue());
+					float UserDistance = getDistanceBetweenTwoUsersLatLng(sheet.getRow(rowOfUser).getCell(7).getStringCellValue(), sheet.getRow(i).getCell(7).getStringCellValue());
 					if(UserDistance != -1 && UserDistance <= maxDistance)
 					{
 						peopleInArea += sheet.getRow(i).getCell(0).getStringCellValue() //Username
@@ -723,7 +759,7 @@ public class ExcelTableProcessor
 		sheet=workbook.getSheet("Sheet1");
 		
 		String medals = "";
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
 			medals = GetMedalsCorrectOrder(username);
@@ -759,7 +795,7 @@ public class ExcelTableProcessor
 			}
 			
 			newMedalList += newlyAddedMedal;
-			WriteToDatabase(userRow, 11, newMedalList);
+			writeToDatabase(userRow, 11, newMedalList);
 			return "Added Medal to " + username;
 		}
 		else
@@ -779,7 +815,7 @@ public class ExcelTableProcessor
 		sheet=workbook.getSheet("Sheet1");
 		
 		String medals = "";
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
 			if(sheet.getRow(userRow).getCell(11) != null)
@@ -810,7 +846,7 @@ public class ExcelTableProcessor
 		sheet=workbook.getSheet("Sheet1");
 		
 		String Medals = "";
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
 			if(sheet.getRow(userRow).getCell(11) != null)
@@ -837,10 +873,10 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
-			WriteToDatabase(userRow, 10, avatarReference);
+			writeToDatabase(userRow, 10, avatarReference);
 			return "Users avatar changed!";
 		}
 		else
@@ -854,7 +890,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		int userRow = FindRowOfUser(username);
+		int userRow = findRowOfUser(username);
 		if(userRow != -1)
 		{
 			if(sheet.getRow(userRow).getCell(10) != null)

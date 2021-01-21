@@ -27,6 +27,10 @@ public class ProcessUserInput {
 		{
 			serverMessage = getAllUserNames(SplitString[1]);
 		}
+		else if(SplitString[0].equals("getallusernamesforfriendlist"))
+		{
+			serverMessage = getAllUserNamesForFriendlist(SplitString[1]);
+		}
 		else if(SplitString[0].equals("friend"))
 		{
 			SplitString[1] = SplitString[1].toLowerCase();
@@ -44,6 +48,10 @@ public class ProcessUserInput {
 				else if(SplitString[2].equals("infoForFriendlist"))
 				{
 					serverMessage = getInfoOfUserForFriendsList(SplitString[3]);
+				}
+				else if(SplitString[2].equals("fullFriendListInfo"))
+				{
+					serverMessage = getFullFriendListInfo(SplitString[3]);
 				}
 			}
 			else if(SplitString[1].equals("add"))
@@ -159,7 +167,19 @@ public class ProcessUserInput {
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return "Leaving Activity caused Exception";
+			return "Getting all usernames caused Exception";
+		}
+	}
+	public String getAllUserNamesForFriendlist(String userNotToInclude)
+	{
+		try
+		{
+			return excelTable.getAllUsersForFriendsList(userNotToInclude);
+		}	
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Getting all usernames for the friendslist caused Exception";
 		}
 	}
 	
@@ -237,6 +257,19 @@ public class ProcessUserInput {
 			return "Getting info for friendslist caused Exception";
 		}
 	}
+	public String getFullFriendListInfo(String user)
+	{
+		try
+		{
+			return excelTable.getAllInfoOfUsersFriendlist(user);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return "Getting full info of friendslist caused Exception";
+		}
+	}
+	
 	//RUN
 	
 	public String startActivity(String date, String user, String location, String activityType)

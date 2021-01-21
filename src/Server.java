@@ -16,7 +16,7 @@ public class Server {
         //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
         //InputProcessor.ProcessString("friend_get_friendlist_Mezix");
         //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
-        //InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)_jogging");
+        //%InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)_jogging");
         //InputProcessor.ProcessString("activity_run_stop_Mezix");
         //InputProcessor.ProcessString("activity_run_getpeopleinarea_Enric_5000");
         //InputProcessor.ProcessString("activity_run_join_Phine_Enric");
@@ -28,6 +28,8 @@ public class Server {
         //InputProcessor.ProcessString("friend_updatelocation_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("getallusernames_Mezix");
         //InputProcessor.ProcessString("friend_get_infoForFriendlist_Phine");
+        //InputProcessor.ProcessString("getallusernamesforfriendlist_Mezix");
+        //InputProcessor.ProcessString("friend_get_fullFriendListInfo_Phine");
         
         try
         {
