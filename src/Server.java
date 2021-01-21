@@ -12,11 +12,11 @@ public class Server {
         
         //InputProcessor.ProcessString("login_Mezix_password");
         //InputProcessor.ProcessString("register_Hande2_password_Hande_Eyicalis_21");
-        //InputProcessor.ProcessString("friend_add_Mezix2_Mezix");
+        //InputProcessor.ProcessString("friend_add_Phine_Mezix");
         //InputProcessor.ProcessString("friend_remove_Enric_Mezix");
         //InputProcessor.ProcessString("friend_get_friendlist_Mezix");
         //InputProcessor.ProcessString("friend_get_allInfo_Mezix");
-        //InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)");
+        //InputProcessor.ProcessString("activity_run_start_14:23_Mezix_lat/lng: (53.6175727,9.8987057)_jogging");
         //InputProcessor.ProcessString("activity_run_stop_Mezix");
         //InputProcessor.ProcessString("activity_run_getpeopleinarea_Enric_5000");
         //InputProcessor.ProcessString("activity_run_join_Phine_Enric");
@@ -33,7 +33,6 @@ public class Server {
         {
             serverSocket = new ServerSocket(port);
             System.out.println("Server Socket Created");
-            
         }
         catch (IOException e)
         {

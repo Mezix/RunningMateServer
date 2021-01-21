@@ -37,11 +37,11 @@ public class ProcessUserInput {
 				{
 					serverMessage = getFriendsList(SplitString[3]);
 				}
-				if(SplitString[2].equals("allInfo"))
+				else if(SplitString[2].equals("allInfo"))
 				{
 					serverMessage = getFriendAllInfo(SplitString[3]);
 				}
-				if(SplitString[2].equals("infoForFriendlist"))
+				else if(SplitString[2].equals("infoForFriendlist"))
 				{
 					serverMessage = getInfoOfUserForFriendsList(SplitString[3]);
 				}
@@ -66,7 +66,7 @@ public class ProcessUserInput {
 			
 			if(SplitString[2].equals("start"))
 			{
-				serverMessage = startActivity(SplitString[3], SplitString[4], SplitString[5]);	
+				serverMessage = startActivity(SplitString[3], SplitString[4], SplitString[5], SplitString[6]);	
 			}
 			else if(SplitString[2].equals("stop"))
 			{
@@ -239,11 +239,11 @@ public class ProcessUserInput {
 	}
 	//RUN
 	
-	public String startActivity(String date, String user, String location)
+	public String startActivity(String date, String user, String location, String activityType)
 	{
 		try
 		{
-			return excelTable.startActivity(date, user, location);
+			return excelTable.startActivity(date, user, location, activityType);
 		}	
 		catch (Exception e)
 		{

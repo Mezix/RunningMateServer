@@ -194,7 +194,7 @@ public class ExcelTableProcessor
 		}
 	}
 	
-	//Methods called by ProcessUserInputDirectly
+	//Methods called by ProcessUserInput directly!
 	
 	public String login(String username, String passwort) throws Exception
 	{
@@ -292,6 +292,35 @@ public class ExcelTableProcessor
 			}
 		}
 		return listOfUsers;
+	}
+	
+	public String getAllUsersForFriendsList(String userNotToInclude) throws Exception
+	{
+		fileInput=new FileInputStream("./data.xlsx");
+		workbook=WorkbookFactory.create(fileInput);
+		sheet=workbook.getSheet("Sheet1");
+	
+	int numberOfRows = 1 + sheet.getLastRowNum();
+	String listOfUsers = "";
+	
+	for(int i = 1; i < numberOfRows; i++)
+	{
+		if(sheet.getRow(i) != null)
+		{
+			if(sheet.getRow(i).getCell(0) != null)
+			{
+				if(!sheet.getRow(i).getCell(0).getStringCellValue().equals(userNotToInclude))
+				{
+					listOfUsers += sheet.getRow(i).getCell(0).getStringCellValue() + ";"
+								+  sheet.getRow(i).getCell(0).getStringCellValue() + ";"
+								+ sheet.getRow(i).getCell(0).getStringCellValue() + ";"
+								+ "_";
+				}
+			}
+		}
+	}
+	return listOfUsers;
+		
 	}
 	
 	//FREUNDE
@@ -472,7 +501,7 @@ public class ExcelTableProcessor
 	}
 	//LAUFEN
 	
-	public String startActivity(String time, String username, String location) throws Exception
+	public String startActivity(String time, String username, String location, String activityType) throws Exception
 	{
 		fileInput=new FileInputStream("./data.xlsx");
 		workbook=WorkbookFactory.create(fileInput);
@@ -485,6 +514,7 @@ public class ExcelTableProcessor
 			WriteToDatabase(row, 6, "true");
 			WriteToDatabase(row, 7, location);
 			WriteToDatabase(row, 8, time);
+			WriteToDatabase(row, 16, activityType);
 			return "Activity Started!";
 		}
 		else
@@ -516,7 +546,7 @@ public class ExcelTableProcessor
 		workbook=WorkbookFactory.create(fileInput);
 		sheet=workbook.getSheet("Sheet1");
 		
-		if(userJoining.equals(userBeingJoined))
+		if(!userJoining.equals(userBeingJoined))
 		{
 			int userJoiningRow = FindRowOfUser(userJoining);
 			int userBeingJoinedRow = FindRowOfUser(userBeingJoined);
@@ -536,7 +566,16 @@ public class ExcelTableProcessor
 					WriteToDatabase(userBeingJoinedRow, 9, newActivityList);
 					
 					stopActivityOfUser(userJoining); //now leave our own run if we have one!
-					return "User joining suceeded!";
+					return    sheet.getRow(userBeingJoinedRow).getCell(0).getStringCellValue() //username
+							+ "_"
+							+ sheet.getRow(userBeingJoinedRow).getCell(10).getStringCellValue()//avatar
+							+ "_"
+							+ sheet.getRow(userBeingJoinedRow).getCell(7).getStringCellValue() //start pos
+							+ "_"
+							+ sheet.getRow(userBeingJoinedRow).getCell(8).getStringCellValue() //time
+							+ "_"
+							+ sheet.getRow(userBeingJoinedRow).getCell(16).getStringCellValue() //activityType
+							;
 				}
 				else
 				{
