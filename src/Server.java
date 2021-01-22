@@ -28,7 +28,7 @@ public class Server {
         //InputProcessor.ProcessString("friend_updatelocation_Mezix_lat/lng: (53.6175727,9.8987057)");
         //InputProcessor.ProcessString("getallusernames_Mezix");
         //InputProcessor.ProcessString("friend_get_infoForFriendlist_Phine");
-        InputProcessor.ProcessString("getallusernamesforfriendlist_Mezix");
+        //InputProcessor.ProcessString("getallusernamesforfriendlist_Mezix");
         //InputProcessor.ProcessString("friend_get_fullFriendListInfo_Phine");
         
         try

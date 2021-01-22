@@ -262,7 +262,7 @@ public class ExcelTableProcessor
 		writeToDatabase(numberOfRows, 3, lastName);
 		writeToDatabase(numberOfRows, 4, age);
 		writeToDatabase(numberOfRows, 6, "false"); //ActivityStatus
-		writeToDatabase(numberOfRows, 10, "R.mipmap.avatar1"); //Avatar
+		writeToDatabase(numberOfRows, 10, "avatar1"); //Avatar
 		writeToDatabase(numberOfRows, 13, "0"); //FitnessLevel
 		
 		initialiseStopper(numberOfRows);
@@ -419,7 +419,7 @@ public class ExcelTableProcessor
 			}
 			else
 			{
-				return "";
+				return "null";
 			}
 		}
 		else
@@ -535,6 +535,7 @@ public class ExcelTableProcessor
 			return "User not found!";
 		}
 	}
+	
 	//LAUFEN
 	
 	public String startActivity(String time, String username, String location, String activityType) throws Exception
